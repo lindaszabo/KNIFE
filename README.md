@@ -74,6 +74,13 @@ PE, and 10 for single-end (SE) reads of length < 70, 15 for longer SE reads.
 
 
 # Output
+All output files can be found under [alignment_parent_directory]/[dataset_name] as specified when the script is called. Within this directory the following subdirectories will be created:
+
+1. orig. Contains all sam/bam files output
+2. sampleStats
+3. denovo_script_out
+4. circReads (or the directory will be named as specified by the [report_directory_name] parameter
+
 
 
 # Cite
