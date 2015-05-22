@@ -76,8 +76,26 @@ PE, and 10 for single-end (SE) reads of length < 70, 15 for longer SE reads.
 # Output
 All output files can be found under [alignment_parent_directory]/[dataset_name] as specified when the script is called. Within this directory the following subdirectories will be created:
 
-1. orig: contains all sam/bam files output and information used to assign reads to categories
-    
+1. circReads (or the directory will be named as specified by the [report_directory_name] parameter). 1 file per sample is created in each of the subdirectories 
+    1. ids: alignment and category assignment per read
+    2. reports: read count and p-value per junction using naive method. 2 files created per sample, 1 with annotated junctions (linear and circular) and the other with de novo junctions. 
+      - junction: chr|gene1_symbol:splice_position|gene2_symbol:splice_position|junction_type|strand
+        - junction types are reg (linear), rev (circle formed from 2 or more exons), or dup (circle formed from single exon)
+      - linear: number of reads where read1 aligned to this linear junction and read2 was consistent with presumed splice event, or just number of aligned reads to this linear junction for SE reads
+      - anomaly: number of reads where read2 was inconsistent with read1 alignment to this linear junction
+      - unmapped: number of reads where read1 aligned to this junction and read2 did not map to any index
+      - multimapped: N/A
+      - circ: number of reads where read1 aligned to this circular junction and read2 was consistent with presumed splice event, or just number of aligned reads to this circular junction for SE reads
+      - decoy: number of reads where read2 was inconsistent with read1 alignment to this circular junction
+      - pvalue: naive method p-value for this junction based on all aligned reads (higher = more likely true positive)
+      - scores: (read1, read2) Bowtie2 alignment scores for each read aligning to this junction, or scores at each 10th percentile for junctions with more than 10 reads
+    3. glmReports: read count and posterior probability per junction using GLM (only for PE reads, annotation-dependent junctions). 2 files created per sample, 1 with circular splice junctions and the other with linear splice junctions
+      - junction: chr|gene1_symbol:splice_position|gene2_symbol:splice_position|junction_type|strand
+        - junction types are reg (linear), rev (circle formed from 2 or more exons), or dup (circle formed from single exon)
+      - numReads: number of reads where read1 aligned to this junction and read2 was consistent with presumed splice event
+      - p_predicted: posterior probability that the junction is a true junction
+      - p_value: p-value for the posterior probability to control for the effect of total junctional counts on posterior probability
+    4. glmModels: RData files containing the model used to generate the glmReports 
 2. sampleStats: Contains 2 txt files with high-level alignment statistics per sample (read1 and read2 reported separately).
    * SampleAlignStats.txt: useful for evaluating how well the library prep worked, for example ribosomal depletion. Number of reads are reported, with fraction of total reads listed in ()  
      - READS: number of reads in original fastq file
@@ -104,8 +122,8 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
      - CIRC_FRACTION: CIRC_STRONG / TOTAL
      - LINEAR_FRACTION: LINEAR_STRONG / TOTAL
      - CIRC / LINEAR: CIRC_FRACTION / LINEAR_FRACTION
-3. denovo_script_out
-4. circReads (or the directory will be named as specified by the [report_directory_name] parameter)
+3. orig: contains all sam/bam files output and information used to assign reads to categories
+4. denovo_script_out: debugging output generated during creation of de novo index.
 
 
 
