@@ -76,10 +76,36 @@ PE, and 10 for single-end (SE) reads of length < 70, 15 for longer SE reads.
 # Output
 All output files can be found under [alignment_parent_directory]/[dataset_name] as specified when the script is called. Within this directory the following subdirectories will be created:
 
-1. orig. Contains all sam/bam files output
-2. sampleStats
+1. orig: contains all sam/bam files output and information used to assign reads to categories
+    
+2. sampleStats: Contains 2 txt files with high-level alignment statistics per sample (read1 and read2 reported separately).
+   * SampleAlignStats.txt: useful for evaluating how well the library prep worked, for example ribosomal depletion. Number of reads are reported, with fraction of total reads listed in ()  
+     - READS: number of reads in original fastq file
+     - UNMAPPED: number of reads that did not align to any of the junction, genome, transcriptome, or ribosomal indices
+     - GENOME: number of reads aligning to the genome
+     - G_STRAND: percentage of GENOME reads aligning to forward strand and percentage aligning to reverse strand
+     - TRANSCRIPTOME: number of reads aligning to the transcriptome 
+     - T_STRAND: percentage of TRANSCRIPTOME reads aligning to forward strand and percentage aligning to reverse strand
+     - JUNC: number of reads aligning to the scrambled or linear junction index and overlapping the junction by required amount
+     - J_STRAND: percentage of JUNC reads aligning to forward strand and percentage aligning to reverse strand
+     - RIBO: number of reads aligning to the ribosomal index
+     - R_STRAND: percentage of RIBO reads aligning to forward strand and percentage aligning to reverse strand
+     - 28S, 18S, 5.8S, 5SDNA, 5SrRNA: percentage of RIBO aligning to each of these ribosomal subunits (for human samples only)
+     - HBB: number of reads aligning to HBB genomic location (per hg19 annotation)
+   * SampleCircStats.txt: useful for comparing circular and linear ratios per sample
+      - CIRC_STRONG: number of reads that aligned to a circular junction that has a p-value >= 0.9 using the naive method (very high confidence of true circle)
+     - CIRC_ARTIFACT: number of reads that aligned to a circular junction that has a p-value < 0.9 using the naive method 
+     - DECOY: number of reads where read2 did not align within the circle defined by read1 alignment
+     - LINEAR_STRONG: number of reads that aligned to a linear junction that has a p-value >= 0.9 using the naive method (very high confidence of true linear splicing)
+     - LINEAR_ARTIFACT: number of reads that aligned to a linear junction that has a p-value < 0.9 using the naive method
+     - ANOMALY: number of reads where read2 did not support a linear transcript that includes the read1 junction alignment
+     - UNMAPPED: number of reads where read1 aligned to a linear or scrambled junction but read2 did not map to any index
+     - TOTAL: sum of all previous columns, represents total number of reads mapped to junction but not to genome or ribosome
+     - CIRC_FRACTION: CIRC_STRONG / TOTAL
+     - LINEAR_FRACTION: LINEAR_STRONG / TOTAL
+     - CIRC / LINEAR: CIRC_FRACTION / LINEAR_FRACTION
 3. denovo_script_out
-4. circReads (or the directory will be named as specified by the [report_directory_name] parameter
+4. circReads (or the directory will be named as specified by the [report_directory_name] parameter)
 
 
 
