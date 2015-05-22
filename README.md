@@ -11,6 +11,7 @@ Annotated junction indices are available for Human (hg19), Mouse (mm10), Rat (rn
 
 You will also need to obtain Bowtie1 genome index files for the species (available from iGenomes at http://support.illumina.com/sequencing/sequencing_software/igenome.html), rename the files so that everything before the first "." is the same as the Bowtie2 index files we provided for the species, and place these index files in the  circularRNApipeline/denovo_scripts/index directory. 
 
+# Using Other Genomes
 Code and instructions for creating a new index are provided in createJunctionIndex.
 
 # Software Requirements
