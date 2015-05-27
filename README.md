@@ -132,7 +132,6 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   7. denovo: sam/bam files containing Bowtie2 alignments to the de novo junction index
   8. still_unaligned: fastq files containing the subset of the unaligned reads that did not align to the denovo index either 
   9. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
-4. denovo_script_out: debugging output generated during creation of de novo index.
 
 # Cite
 Szabo L, Morey R, Palpant NJ, Wang PL, Afari N, Jiang C, Parast MM, Murry CE, Laurent LC, Salzman J. Tissue-specific induction of circular RNA during human fetal development revealed by statistically based splicing detection.
