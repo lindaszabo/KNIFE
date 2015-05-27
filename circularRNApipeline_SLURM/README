@@ -30,3 +30,11 @@ you can also append "_large" to the mode to request additional resources when su
 to the scheduler. If you find that some of your samples run fine but others do not, a good first 
 step in troubleshooting is to rerun in the "large" mode (you can also confirm this by querying 
 the scheduler to see how much memory and time your job ended up using).
+
+########################
+## OUTPUT
+########################
+
+In addition to the output files described in the project README, a directory under
+circReads called denovo_script_out will be created. This is just debugging output
+generated during creation of de novo index.
