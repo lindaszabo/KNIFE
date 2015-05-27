@@ -1,4 +1,9 @@
 
+** Before attempting to run, make sure you have the Bowtie2 index files for your species 
+in circularRNApipeline_SLURM/index, the Bowtie1 index files in 
+circularRNApipeline_SLURM/denovo_scripts/index, and the gtf file in 
+circularRNApipeline_SLURM/denovo_scripts (see main project README for details).
+
 ** A complete analysis using these wrapper scripts to submit jobs to the scheduler requires 
 calling findCircularRNA.sh 2 times. The first run generates the annotation-dependent reports, 
 alignment statistics, and creates the de novo index for this dataset. For the second run, 
@@ -6,7 +11,7 @@ use all the same parameters from the first run but append the string "_unaligned
 This generates the de novo reports by aligning unaligned reads to the de novo index created 
 for this dataset during the first run. 
 
-** You must cd into circularRNApipeline and run the script findCircularRNA.sh
+** You must cd into circularRNApipeline_SLURM and run the script findCircularRNA.sh
 from within the directory so that all relative paths will work.
 
 ** There are a total of 10 possible parameters, the first 5 are required and
