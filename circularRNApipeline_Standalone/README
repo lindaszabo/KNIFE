@@ -1,5 +1,10 @@
 
-** You must cd into circularRNApipeline and run the script completeRun.sh
+** Before attempting to run, make sure you have the Bowtie2 index files for your species 
+in circularRNApipeline_Standalone/index, the Bowtie1 index files in 
+circularRNApipeline_Standalone/denovo_scripts/index, and the gtf file in 
+circularRNApipeline_Standalone/denovo_scripts (see main project README for details).
+
+** You must cd into circularRNApipeline_Standalone and run the script completeRun.sh
 from within the directory so that all relative paths will work.
 
 ** There are a total of 10 possible parameters, the first 5 are required and
