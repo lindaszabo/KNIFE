@@ -199,6 +199,10 @@ do
   run_count=`ps -ealf | grep preprocessAlignedReads.sh | grep ${USER} | grep -v grep | wc -l`
 done
 
+# was having some I/O issues where output files weren't written even though preprocessAlignedReads.sh was complete, but did get written a few minutes later
+# so just taking a little pause here to make sure the files get output before moving on
+sleep 300  
+
 # analysis
 for (( i=1; i<=NUM_FILES; i++ ))
 do

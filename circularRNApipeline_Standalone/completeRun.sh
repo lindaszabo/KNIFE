@@ -49,6 +49,10 @@ JUNCTION_MIDPOINT=${13}
 echo "./findCircularRNA.sh \"$@\""
 ./findCircularRNA.sh "$@"  
 
+# was having some I/O issues where output files weren't written even though findCircularRNA.sh was complete, but did get written a few minutes later
+# so just taking a little pause here to make sure the files get output before moving on
+sleep 300
+
 # run GLM to output reports  
 if [[ $MODE != *skipGLM* ]]
 then
