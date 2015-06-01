@@ -1,0 +1,110 @@
+###########################
+# Package Requirements
+###########################
+
+python (tested with 2.7.5) and the biopython and bcbio-gff libraries
+
+Bowtie2.2.2
+
+############################
+# Before beginning
+############################
+
+Select 2 string identifiers that will be used for this species index.
+These strings will be used in the subsequent steps and any time you see INDEX_MODE_ID or
+INDEX_FILE_ID in the instructions make sure you use these exact strings.
+
+    INDEX_MODE_ID: a string that will be included in the MODE parameter when calling findCircularRNA.sh or completeRun.sh to specify alignments to this index
+    INDEX_FILE_ID: a string that will be used in all file names for fasta and bowtie indices for this species
+
+These can be the same string, but generally it is good to have the file name identifier (#2) be more specific to include information like what genome build and
+annotation are used, while the string for the MODE parameter (#1) is more simple (i.e. mouse, fly, etc).
+
+#############################################################################################
+# STEP 1: Gather required data files and create genome, transcriptome, and ribosomal indices
+#############################################################################################
+
+You will need to collect/create the files listed below in order to create an index for a new species
+and run the circular RNA analysis pipeline.
+
+1. fasta file containing the sequences of the genome
+2. fasta file containing the sequences of the transcriptome
+3. fasta file containing the ribosomal RNA sequences (can be split into subunits or just a single sequence)
+4. a gtf file for the species
+5. either find or create a bowtie2 genome index that was created with the same genome build you are using for 1-4
+6. either find or create a bowtie genome index. This is bowtie 1, not bowtie2, and is used in the denovo pipeline
+7. either find or create a bowtie2 transcriptome index that was created with the same gtf and genome build you are using
+8. create a bowtie2 ribosomal RNA index using the ribosomal fasta file from #3 
+
+#1-6 usually found by downloading igenomes for the species
+
+#7 you can get by downloading a fasta file of known genes from UCSC for the species and using this to create a bowtie2 index.
+Note that when you download the fasta file from UCSC, the gene headers have spaces in them. These need to be removed before
+using the file to create an index, because bowtie will ignore everything after the first space in the header which usually means
+you lose important information. For a fasta file named transcriptome.fa, this command will do the trick:
+
+more transcriptome.fa | sed -e 's/\s*//g' > transcriptome_fullheaders.fa
+
+#8 takes some searching in the UCSC genome browser or other sources to figure out coordinates of ribosomal subunits.
+If you don't care about subunits, the full ribosomal repeat sequence is usually included in a file downloaded from igenomes
+and you can just use this as your ribosomal RNA. 
+
+#######################################################
+# STEP 2: Create linear and scrambled junction indices
+#######################################################
+
+There are 2 bash commands you need to call for this. The 1st must be complete before you can run the 2nd.
+
+COMMAND 1: creates the exon database. This is independent of window size, so if you decide to change the window size you do not need to repeat this step.
+
+python makeExonDB.py -f genome.fasta -a genome.gtf -o path_to_output_directory
+
+parameters
+
+-f: genome fasta file for the species
+
+-a: genome gtf file for the species with exon annotations to be used for the index
+
+-o: directory to output the database files
+
+COMMAND 2: creates the junction indices. This can only be run after step 1 is complete.
+
+sh createJunctionIndex.sh path_to_circularRNApipeline path_to_output_directory INDEX_FILE_ID window_size
+
+parameters
+
+path_to_circularRNApipeline: path to the pipeline directory, index files created will be placed in the index subdirectory
+
+path_to_output_directory: the same outputDirectory used in step 1 to create the exonDB
+
+INDEX_FILE_ID: string selected above that will be included in all of the fasta file names and bowtie index file names
+
+window_size: (default 1,000,000). size of sliding window to include exon pairs in junction database.
+
+##############################################################################
+# STEP 3: Place other index files in correct location to be used by pipeline
+##############################################################################
+
+Rename the genome, transcriptome, and ribosomal files as specified below and place all in circularRNApipeline/index.
+Note that your bowtie2 index file extensions may be .bt2, that is fine, use the existing extension.
+
+    Bowtie2 genome index: rename all 6 index files to INDEX_FILE_ID_genome.*.bt2l
+    Bowtie2 transcriptome index: rename all 6 index files to INDEX_FILE_ID_transcriptome.*.bt2l
+    Bowtie2 ribosomal index: rename all 6 index files to INDEX_FILE_ID_ribosomal.*.bt2l
+    Fasta files: name the fasta files used to generate these indices respectively to INDEX_FILE_ID_genome.fa, INDEX_FILE_ID_transcriptome.fa, INDEX_FILE_ID_ribosomal.fa 
+
+Rename these files and place in circularRNApipeline/denovo_scripts/index
+
+    Bowtie1 genome index: rename all 6 index files to INDEX_FILE_ID_genome.*.ebwt
+
+The gtf file needs to be renamed to INDEX_FILE_ID_genes.gtf and placed in circularRNApipeline/denovo_scripts
+
+#######################################################
+# STEP 5: Edit scripts to enable use of the new index
+#######################################################
+
+Annotation-dependent script: update circularRNApipeline/findCircularRNA.sh to add a bt_prefix condition for your species.
+bt_prefix will be set to INDEX_FILE_ID and the mode string to search for will be the INDEX_MODE_ID
+
+Denovo script: update circularRNApipeline/denovo_scripts/process_directory_unaligned.pl to add a case to point $reference and $gtf variables
+to your files when $mode contains INDEX_MODE_ID
