@@ -100,7 +100,7 @@ Rename these files and place in circularRNApipeline/denovo_scripts/index
 The gtf file needs to be renamed to INDEX_FILE_ID_genes.gtf and placed in circularRNApipeline/denovo_scripts
 
 #######################################################
-# STEP 5: Edit scripts to enable use of the new index
+# STEP 4: Edit scripts to enable use of the new index
 #######################################################
 
 Annotation-dependent script: update circularRNApipeline/findCircularRNA.sh to add a bt_prefix condition for your species.
