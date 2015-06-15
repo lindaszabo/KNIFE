@@ -1,5 +1,5 @@
 # KNIFE
-Known and Novel IsoForm Explorer. Statistically based splicing detection for circular and linear isoforms
+Known and Novel IsoForm Explorer. Statistically based splicing detection for circular and linear isoforms from RNA-Seq data.
 
 # Overview
 This statistical algorithm increases the sensitivity and specificy of circularRNA detection from RNA-Seq data by quantifying circular and linear RNA splicing events at both annotated and un-annotated exon boundaries. It can analyze single-end or paired-end reads stored in plain-text fastq or gzipped fastq files. A version of the code that runs on a single Linux machine is provided in circularRNApipeline_Standalone. circularRNApipeline_SLURM contains code that provides the same results, but includes wrapper scripts to run on a cluster using the SLURM scheduler. This is the functional code we ran on our cluster, but each scheduler deployment is configured slightly differently. Therefore, this is not meant to be used as is like the standalone version of the code is, but rather to be used as a template that you can modify to work with your scheduler. Parameters and output files are described below, and README files within each of these code directories contain detailed instructions for exactly how to run the code.
@@ -64,9 +64,9 @@ PE, and 10 for single-end (SE) reads of length < 70, 15 for longer SE reads.
   
 - report_directory_name: Default circReads. This is the name of the directory created under alignment_parent_directory/dataset_name where the report files listing circular or linear RNA junction read counts and statistical scores will be output.
 
-- ntrim: Default 50. For creating de novo index, what is the number of bases to trim from each end of the read. Suggested value is 2n/3 where n is the length of the raw (untrimmed) reads in the dataset.
+- ntrim: Default 50. When creating the de novo index, this is the number of bases to trim from each end of the read. Suggested value is 2n/3 where n is the length of the raw (untrimmed) reads in the dataset.
 
-- denovoCircMode: 0|1, default 1. Should we report only circular junctions in the denovo analysis? changing to 0 means linear denovo junctions are included too. NOTE: denovoCircMode=0 and 1 for the same dataset cannot be run at the same time as there are some dataset-specific files that will get overwritten. If you want to run denovoCircMode=0 and 1 on the same dataset, use a different output directory for the 2 unaligned runs so your files do not get overwritten. If you also want to save the sam files for both unaligned mode runs, you will need to copy orig/denovo and orig/still_unaligned before the 2nd run because these files will be overwritten.
+- denovoCircMode: 0|1, default 1. Should we report only circular junctions in the denovo analysis? Changing to 0 means linear denovo junctions are included too. NOTE: denovoCircMode=0 and 1 for the same dataset cannot be run at the same time as there are some dataset-specific files that will get overwritten. If you want to run denovoCircMode=0 and 1 on the same dataset, use a different output directory for the 2 unaligned runs so your files do not get overwritten. If you also want to save the sam files for both unaligned mode runs, you will need to copy orig/denovo and orig/still_unaligned before the 2nd run because these files will be overwritten.
 
 - junction_id_suffix: Default none. During the analysis step, the ids of all scrambled junction-overlapping reads are output to alignment_parent_directory/dataset_name/orig/ids/junction and the ids of all canonical-order junction-overlapping reads are output to alignment_parent_directory/dataset_name/orig/ids/reg. Subsequent steps then read these files to report on reads aligning to each junction. If you want to try requiring different amounts of junction overlap in order to compare results, you can specify a string be added to the id directory name so that the original results are not overwritten. If you use this option, also make sure that you use a different report_directory_name so that your reports for this run are output to a different directory instead of overwriting those in the default directory.
 
@@ -133,5 +133,9 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   9. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
 4. denovo_script_out: debugging output generated during creation of de novo index.
 
+# Contact
+This code was developed and is maintained by Linda Szabo, lszabo at stanford.edu. Please understand that I am continuing to develop new algorithms, but I will do my best to respond in a timely manner. 
+
 # Cite
-Szabo L, Morey R, Palpant NJ, Wang PL, Afari N, Jiang C, Parast MM, Murry CE, Laurent LC, Salzman J. Tissue-specific induction of circular RNA during human fetal development revealed by statistically based splicing detection.
+Szabo L, Morey R, Palpant NJ, Wang PL, Afari N, Jiang C, Parast MM, Murry CE, Laurent LC, Salzman J. Statistically based splicing detection reveals neural enrichment and tissue-specific induction of circular RNA during human fetal development. Genome Biology. 2015, 16:126.
+
