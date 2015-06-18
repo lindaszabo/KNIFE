@@ -35,7 +35,7 @@ EMPTY_SEQUENCE = "NOSEQUENCE" # to indicate junction sequence contains all Ns so
         
 # pattern like exonsByStrand_chr1.pkl
 # where we are interested in chr1 as the file id
-patt_exonfilename = re.compile(".+?_(.+?)\.pkl")
+patt_exonfilename = re.compile(".+?exonsByStrand_(.+?)\.pkl")
 
 # file name like exonsByStrand_chr1.pkl
 patt_exonfile = re.compile("exonsByStrand_.+\.pkl")
