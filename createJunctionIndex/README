@@ -53,7 +53,9 @@ and you can just use this as your ribosomal RNA.
 # STEP 2: Create linear and scrambled junction indices
 #######################################################
 
-There are 2 bash commands you need to call for this. The 1st must be complete before you can run the 2nd.
+There are 2 bash commands you need to call for this. The 1st must be complete before you can run the 2nd. After both are complete, you will find
+the Bowtie2 index files and fasta files for both the linear and scrambled junction indices can be found under circularRNApipeline/index
+and are ready to use.
 
 COMMAND 1: creates the exon database. This is independent of window size, so if you decide to change the window size you do not need to repeat this step.
 
