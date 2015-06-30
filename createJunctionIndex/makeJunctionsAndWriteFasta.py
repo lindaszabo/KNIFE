@@ -106,41 +106,44 @@ def createJunctions(fileId, exonFile):
         
         exonsInRange = exons.keys()
         
-        if strand == 1:
-            # start from begining and work forward for + strand
-            startPos = min(x[0] for x in exons.keys())
-            # when we are looking at a set of exons including this last one, we are done with the sliding window
-            endPos = max(x[1] for x in exons.keys())
-            
-            while True:
-                # the starting point was already established, now limit to those within window
-                exonsInRange = [x for x in exonsInRange if x[1] <= startPos + args.window]
+        if len(exonsInRange) > 0:
+            if strand == 1:
+                # start from begining and work forward for + strand
+                startPos = min(x[0] for x in exonsInRange)
+                # when we are looking at a set of exons including this last one, we are done with the sliding window
+                endPos = max(x[1] for x in exonsInRange)
                 
-                # write these junctions to file if they haven't already been written
-                allJunctions = writeAllPairs(exonSeqRec, chrId, exons, exonsInRange, allJunctions, outf)
-                
-                # if max in exonsInRange is endPos then we're done
-                if max(x[1] for x in exonsInRange) == endPos:
-                    break
-                # otherwise move over 1 exon and repeat
-                exonsInRange = [x for x in exons.keys() if x[0] > startPos]
-                startPos = min(x[0] for x in exonsInRange)   
-        else:
-            # start from end and work backwards for - strand
-            startPos = max(x[1] for x in exons.keys())
-            endPos = min(x[0] for x in exons.keys())
-            
-            while True:
-                # the starting point was already established, now limit to those within window
-                exonsInRange = [x for x in exonsInRange if x[0] >= startPos - args.window]
-                allJunctions = writeAllPairs(exonSeqRec, chrId, exons, exonsInRange, allJunctions, outf)
-                
-                # if min in exonsInRange is endPos then we're done
-                if min(x[0] for x in exonsInRange) == endPos:
-                    break
-                # otherwise move over 1 exon and repeat
-                exonsInRange = [x for x in exons.keys() if x[1] < startPos]
+                while True:
+                    # the starting point was already established, now limit to those within window
+                    exonsInRange = [x for x in exonsInRange if x[1] <= startPos + args.window]
+                    
+                    if len(exonsInRange) > 0:
+                        # write these junctions to file if they haven't already been written
+                        allJunctions = writeAllPairs(exonSeqRec, chrId, exons, exonsInRange, allJunctions, outf)
+                        
+                        # if max in exonsInRange is endPos then we're done
+                        if max(x[1] for x in exonsInRange) == endPos:
+                            break
+                        # otherwise move over 1 exon and repeat
+                        exonsInRange = [x for x in exons.keys() if x[0] > startPos]
+                        startPos = min(x[0] for x in exonsInRange)   
+            else:
+                # start from end and work backwards for - strand
                 startPos = max(x[1] for x in exonsInRange)
+                endPos = min(x[0] for x in exonsInRange)
+                
+                while True:
+                    # the starting point was already established, now limit to those within window
+                    exonsInRange = [x for x in exonsInRange if x[0] >= startPos - args.window]
+                    if len(exonsInRange) > 0:
+                        allJunctions = writeAllPairs(exonSeqRec, chrId, exons, exonsInRange, allJunctions, outf)
+                        
+                        # if min in exonsInRange is endPos then we're done
+                        if min(x[0] for x in exonsInRange) == endPos:
+                            break
+                        # otherwise move over 1 exon and repeat
+                        exonsInRange = [x for x in exons.keys() if x[1] < startPos]
+                        startPos = max(x[1] for x in exonsInRange)
                 
     outf.close()
     
