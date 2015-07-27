@@ -1,0 +1,42 @@
+This is a single sample with paired end read data from a human sample.
+I downloaded the raw reads from SRA and used TrimGalore (wrapper for cutadapt) to
+trim poor quality ends and adapter sequence. The original reads were 60nt, for the
+files included here I kept all reads where both mates were at least 50nt after
+trimming. The fastq files use phred64 encoding.
+
+Other files not mentioned below are created, but these are the main output files
+of interest to confirm at each step. Note that glmReport, report, and sampleStats
+files might not exactly match results provided in testOutput due to slight
+differences in software versions but the results should be close.
+
+1. cd into directory containing findCircularRNA.sh
+
+2. To find annotated linear and circular junctions, run the following command after
+replacing READ_DIRECTORY with the absolute path to the directory containing the
+test fq.gz files and OUTPUT_DIRECTORY with the absolute path to the directory
+where you want the output. All other parameters should be left as is, they were
+determined as outlined in the project README to be appropriate for this dataset. 
+ 
+sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
+
+3. Confirm output: 
+
+a) OUTPUT_DIRECTORY/circReads/glmReports contains SRR1027187_1__linearJuncProbs.txt
+and SRR1027187_1__circJuncProbs.txt
+
+b) OUTPUT_DIRECTORY/sampleStats contains SampleAlignStats.txt and SampleCircStats.txt
+
+c) denovo index was created: 6 bowtie2 index files named denovo_testData* and
+denovo_testData_onlycircles1.fa were generated in CODE_DIRECTORY/denovo_scripts/.
+
+4. To align to the denovo index and find unannotated circular junctions, run the
+following command, with READ_DIRECTORY and OUTPUT_DIRECTORY matching what you used
+in step 2.
+
+sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64_unaligned circReads 40
+
+5. Confirm denovo output:
+
+OUTPUT_DIRECTORY/circReads/reports/unaligned_SRR1027187_1_denovo_report.txt 
+
+
