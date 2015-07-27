@@ -204,6 +204,10 @@ use_var=var(posteriors)
 # add p-value to junctionPredictions 
 junctionPredictions[, p_value:=(pnorm(log(1/iter_2 - 1) - numReads*use_mu)/sqrt(numReads*use_var))]
 
+# rename cols to be consistent with circular glmReports
+junctionPredictions[, iter_1:=NULL]
+setnames(junctionPredictions, "iter_2", "p_predicted")
+
 save(saves, file=data_out)  # save models
 write.table(junctionPredictions, linear_juncp_out, row.names=FALSE, quote=FALSE, sep="\t")
 
