@@ -8,7 +8,7 @@ As for all RNA-Seq analysis tools, our algorithm may perform poorly on low quali
 
 # Software Requirements
 
-- Bowtie 2.2.2 
+- Bowtie 2.2.1 
 - Bowtie 0.12.7
 - perl 
 - python (tested with 2.7.5) and the numpy and scipy libraries
