@@ -137,6 +137,9 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   4. denovo_script_out: debugging output generated during creation of de novo index.
   5. sampleStats: logs from generating sample statistics files
 
+# Verifying Installation
+Pre-trimmed fastq files for 1 human sample are provided with the release of v1.1. See the README under testData for instructions to run KNIFE on this sample. Expected results are provided in testData/testOutput.
+
 # Contact
 This code was developed and is maintained by Linda Szabo, lszabo at stanford.edu. Please understand that I am continuing to develop new algorithms, but I will do my best to respond in a timely manner. 
 
