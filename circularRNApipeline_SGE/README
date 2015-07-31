@@ -1,5 +1,5 @@
 
-** You will need to edit circularRNApipeline_SGE/analysis/depends* files to load the correct software modules. 
+** You will need to edit circularRNApipeline_SGE/analysis/depends* and circularRNApipeline_SGE/denovo_scripts/depends* files to load the correct software modules. 
 The included files provide examples of what was required for our environment.
 
 ** Before attempting to run, make sure you have the Bowtie2 index files for your species 
