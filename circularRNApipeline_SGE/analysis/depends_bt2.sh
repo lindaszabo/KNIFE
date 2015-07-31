@@ -1,0 +1,1 @@
+module load bowtie/2.2.4 # must be 2.2.2 or higher

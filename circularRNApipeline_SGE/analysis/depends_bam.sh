@@ -1,0 +1,1 @@
+module load samtools/1.2  # only required if working with bam files instead of sam

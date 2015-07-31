@@ -1,0 +1,1 @@
+module load r/3.2.0  # must be version with data.table installed
