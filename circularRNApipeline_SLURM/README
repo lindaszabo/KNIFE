@@ -1,5 +1,5 @@
-** You will need to edit circularRNApipeline_SLURM/analysis/depends* files to load the correct software modules. 
-The included files provide examples of what was required for our environment.
+** You will need to edit circularRNApipeline_SLURM/analysis/depends* and circularRNApipeline_SLURM/denovo_scripts/depends* 
+files to load the correct software modules. The included files provide examples of what was required for our environment.
 
 ** Before attempting to run, make sure you have the Bowtie2 index files for your species 
 in circularRNApipeline_SLURM/index, the Bowtie1 index files in 
