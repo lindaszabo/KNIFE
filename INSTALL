@@ -1,0 +1,19 @@
+To install KNIFE for use on a cluster running SGE or SLURM scheduler:
+
+1. Download most recent version of code. You will be using code under circularRNApipeline_SGE
+for Sun Grid Engine, or circularRNApipeline_SLURM for SLURM, and can delete the directory
+for the other scheduler. 
+
+2. Edit the following files to load appropriate modules at runtime: 
+   circularRNApipeline_*/analysis/depends_bam.sh needs to load samtools version 1.2+
+   circularRNApipeline_*/analysis/depends_bt2.sh needs to load Bowtie2 2.2.1+ (tested with 2.2.1)
+   circularRNApipeline_*/analysis/depends_python.sh needs to load python 2.7.5+ (tested with 2.7.5) with numpy and scipy libaries
+   circularRNApipeline_*/analysis/depends_r.sh needs to load R (tested with 3.0.2) which has data.table package installed
+   circularRNApipeline_*/denovo_scripts/depends_bt1.sh needs to load Bowtie1 (tested with 0.12.7)
+   if perl is not available by default, circularRNApipeline_*/denovo_scripts/denovo_scripts.batch needs to load perl
+   
+3. Install bowtie indexes by following instructions in the README for "Using Available Genomes"
+
+4. Follow directions in testOutput/README to test installation.
+
+   
