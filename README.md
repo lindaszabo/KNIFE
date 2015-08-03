@@ -2,9 +2,13 @@
 Known and Novel IsoForm Explorer. Statistically based splicing detection for circular and linear isoforms from RNA-Seq data.
 
 # Overview
-This statistical algorithm increases the sensitivity and specificy of circularRNA detection from RNA-Seq data by quantifying circular and linear RNA splicing events at both annotated and un-annotated exon boundaries. It can analyze single-end or paired-end reads stored in plain-text fastq or gzipped fastq files. A version of the code that runs on a single Linux machine is provided in circularRNApipeline_Standalone. circularRNApipeline_SLURM contains code that provides the same results, but includes wrapper scripts to run on a cluster using the SLURM scheduler. Similarly, circularRNApipelin_SGE includes wrapper scripts to run on a cluster using a Sun Grid Engine scheduler. Parameters and output files are described below, and README files within each of these code directories contain detailed instructions for exactly how to run the code.
+This statistical algorithm increases the sensitivity and specificy of circularRNA detection from RNA-Seq data by quantifying circular and linear RNA splicing events at both annotated and un-annotated exon boundaries. It can analyze single-end or paired-end reads stored in plain-text fastq or gzipped fastq files. A version of the code that runs on a single Linux machine is provided in circularRNApipeline_Standalone. circularRNApipeline_SLURM contains code that provides the same results, but includes wrapper scripts to run on a cluster using the SLURM scheduler. Similarly, circularRNApipeline_SGE includes wrapper scripts to run on a cluster using a Sun Grid Engine scheduler. Parameters and output files are described below, and README files within each of these code directories contain detailed instructions for exactly how to run the code. 
 
 As for all RNA-Seq analysis tools, our algorithm may perform poorly on low quality data. Therefore, we strongly recommend using our algorithm only on reads that have been processed by a tool such as cutAdapt to trim poor quality ends and adapters as predictions will be adversely affected by low-quality reads.
+
+# Installation
+
+See INSTALL file for instructions on installing KNIFE.
 
 # Software Requirements
 
@@ -16,7 +20,7 @@ As for all RNA-Seq analysis tools, our algorithm may perform poorly on low quali
 - samtools (if you want alignment files output as bam instead of sam files)
 
 # Using Available Genomes
-Annotated junction indices are available for Human (hg19), Mouse (mm10), Rat (rn5) and Drosophila (dm3). We have also packaged up all of the the transcriptome, genome, and ribosomal index, fasta, and gtf files for each of these genomes named as required for use with our scripts. You will need to create an index directory under the top level circularRNApipeline directory and unpack the Bowtie2 tar (use: tar zxvf genomeId_BT2index.tar.gz) and the fastas tar (use: tar zxvf genomeId_fastas.tar.gz) into this index directory. You will need to create another index directory under circularRNApipeline/denovo_scripts and unpack the Bowtie1 tar (use: tar zxvf genomeId_BT1index.tar.gz) into this index directory. The gtf file must be downloaded and uncompressed (gunzip genomeId_genes.gtf.gz) into the circularRNApipeline/denovo_scripts directory. Files are available here: https://mega.nz/#F!RtsCHCQb!fyxYNWjoCef5Ie361vUxiA
+Annotated junction indices are available for Human (hg19), Mouse (mm10), Rat (rn5) and Drosophila (dm3). We have also packaged up all of the the transcriptome, genome, and ribosomal index, fasta, and gtf files for each of these genomes named as required for use with our scripts. See INSTALL file for directions on installing these genomes.
 
 # Using Other Genomes
 Code and instructions for creating a new index are provided in createJunctionIndex.
