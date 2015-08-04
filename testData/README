@@ -1,12 +1,12 @@
-This is a single sample with paired end read data from a human sample.
-I downloaded the raw reads from SRA and used TrimGalore (wrapper for cutadapt) to
-trim poor quality ends and adapter sequence. The original reads were 60nt, for the
-files included here I kept all reads where both mates were at least 50nt after
-trimming. The fastq files use phred64 encoding.
+Fastq files are provided with release v1.1. This is a single sample with paired end 
+read data from a human sample. I downloaded the raw reads from SRA and used TrimGalore 
+(wrapper for cutadapt) to trim poor quality ends and adapter sequence. The original reads 
+were 60nt, for the files included here I kept all reads where both mates were at least 50nt 
+after trimming. The fastq files use phred64 encoding.
 
-Other files not mentioned below are created, but these are the main output files
-of interest to confirm at each step. Note that glmReport, report, and sampleStats
-files might not exactly match results provided in testOutput due to slight
+Other files not mentioned below are created when you run KNIFE on this sample, but these 
+are the main output files of interest to confirm at each step. Note that glmReport, report, 
+and sampleStats files might not exactly match results provided in testOutput due to slight
 differences in software versions but the results should be close.
 
 1. cd into directory containing findCircularRNA.sh
