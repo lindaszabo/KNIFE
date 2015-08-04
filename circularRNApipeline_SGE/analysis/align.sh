@@ -24,7 +24,7 @@ NFLAGS="--no-sq --score-min L,0,-0.24 --rdg 50,50 --rfg 50,50 --no-unal" # flags
 if [ "$ALIGN_OUTDIR" = "junction" -o "$ALIGN_OUTDIR" = "reg" -o "$ALIGN_OUTDIR" = "denovo" ]
 then
   # no N penalty or cap on N
-  NFLAGS=${NFLAGS}" --n-ceil L,0,1 --np .0001"
+  NFLAGS=${NFLAGS}" --n-ceil L,0,1 --np 1"
 fi
 
 # For unaligned reads we report all reads. Only the first will be used for further analysis in the pipeline though,
