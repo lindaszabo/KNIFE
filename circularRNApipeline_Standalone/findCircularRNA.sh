@@ -100,6 +100,24 @@ then
   elif [[ $MODE = *crypto* ]]
   then
     bt_prefix="cryptococcus_neoformans_grubii_h99"
+  elif [[ $MODE = *cerevisiae* ]]
+  then
+    bt_prefix="Scer"
+  elif [[ $MODE = *mikatae* ]]
+  then
+    bt_prefix="Smik"
+  elif [[ $MODE = *bayanus* ]]
+  then
+    bt_prefix="Sban"
+  elif [[ $MODE = *HSV* ]]
+  then
+    bt_prefix="KOS"
+  elif [[ $MODE = *capsas* ]]
+  then
+    bt_prefix="capsaspora_atcc_30864_2"
+  elif [[ $MODE = *rosetta* ]]
+  then
+    bt_prefix="salpingoeca_rosetta_1"
   else
     bt_prefix="hg19"
   fi

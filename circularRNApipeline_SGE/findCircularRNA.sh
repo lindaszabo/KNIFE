@@ -139,12 +139,6 @@ then
   elif [[ $MODE = *fly* ]]
   then
     bt_prefix="dm3"
-  elif [[ $MODE = *pombe* ]]
-  then
-    bt_prefix="ASM294v2_23"
-  elif [[ $MODE = *crypto* ]]
-  then
-    bt_prefix="cryptococcus_neoformans_grubii_h99"
   else
     bt_prefix="hg19"
   fi

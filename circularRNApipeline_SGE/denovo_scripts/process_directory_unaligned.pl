@@ -23,12 +23,6 @@ if (index($mode, "mouse") != -1){
 } elsif (index($mode, "fly") != -1){
     $reference="index/dm3_genome";
     $gtf="dm3_genes.gtf";
-} elsif (index($mode, "pombe") != -1){
-    $reference="index/dm3_genome";
-    $gtf="ASM294v2_23_genes.gtf";
-} elsif (index($mode, "crypto") != -1){
-    $reference="index/cryptococcus_neoformans_grubii_h99_genome";
-    $gtf="cryptococcus_neoformans_grubii_h99_genes.gtf";
 } else {
     $reference="index/hg19_genome";
     $gtf="hg19_genes.gtf";
