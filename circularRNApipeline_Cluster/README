@@ -1,0 +1,33 @@
+
+##########################
+## USAGE
+##########################
+
+If you are using a SLURM scheduler, you will run findCircularRNA_SLURM.sh and if
+you are using a Sun Grid Engine scheduler you will run findCircularRNA_SGE.sh.
+The code produces the same results, the only difference is scheduler-specific syntax.
+References below to findCircularRNA*.sh refer to either of these files.
+
+You must cd into circularRNApipeline_Cluster and run the script findCircularRNA*.sh
+from within the directory so that all relative paths will work.
+
+A complete analysis using these wrapper scripts to submit jobs to the scheduler requires 
+calling findCircularRNA.sh 2 times.
+
+  1) The first run generates the annotation-dependent reports, alignment statistics,
+     and creates the de novo index for this dataset.
+     
+     sh findCircularRNA.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode junction_id_suffix
+
+  2) For the second run, use all the same parameters from the first run but append
+     the string "_unaligned" to the mode. This generates the de novo reports by aligning
+     unaligned reads to the de novo index created for this dataset during the first run. 
+
+     sh findCircularRNA.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_unaligned report_directory_name ntrim denovoCircMode junction_id_suffix
+
+See main project README file for parameter descriptions and default values. In addition
+to the possible values for the "mode" parameter described in the project README,
+you can also append "_large" to the mode to request additional resources when submitting
+jobs to the scheduler. If you find that some of your samples run fine but others do not,
+a good first step in troubleshooting is to rerun in the "large" mode (you can also confirm
+this by querying the scheduler to see how much memory and time your job ended up using).

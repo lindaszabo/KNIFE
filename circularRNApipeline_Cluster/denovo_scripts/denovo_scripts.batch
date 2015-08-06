@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# params are: ALIGN_PARDIR, DATASET_NAME, MODE, NTRIM, DENOVOCIRC
+
+perl process_directory_unaligned.pl ${1} ${2} ${3} ${4} ${5}
+
