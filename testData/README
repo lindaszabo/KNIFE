@@ -18,7 +18,8 @@ where you want the output. All other parameters should be left as is, they were
 determined as outlined in the project README to be appropriate for this dataset. 
  
 Running on cluster: sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
-Running on single machine: sh completeRun.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
+
+Running on single machine: sh completeRun.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 phred64 circReads 40
 
 3. Confirm output: 
 
@@ -35,6 +36,7 @@ following command, with READ_DIRECTORY and OUTPUT_DIRECTORY matching what you us
 in step 2.
 
 Running on cluster: sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64_unaligned circReads 40
+
 Running on single machine: skip to next step, everything was already run in the call above to completeRun.sh
 
 5. Confirm denovo output:
