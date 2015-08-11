@@ -22,4 +22,4 @@ argument 6 specified.
 
 sh completeRun.sh read_directory read_id_style alignment_parent_directory 
 dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode 
-junction_id_suffix > log.sh
+junction_id_suffix 2>&1 | tee out.log
