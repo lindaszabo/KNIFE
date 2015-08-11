@@ -134,7 +134,7 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   7. denovo: sam/bam files containing Bowtie2 alignments to the de novo junction index
   8. still_unaligned: fastq files containing the subset of the unaligned reads that did not align to the denovo index either 
   9. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
-4. logs
+4. logs (Cluster version only, for Standalone stderr and stdout need to be redirected to log file)
   1. align: logs from all bowtie2 alignment calls
   2. analysis: logs from processing the Bowtie2 output to generate the naive-method and glm reports
   3. denovo_index: fasta and bowtie2 index files generated for the de novo index 
