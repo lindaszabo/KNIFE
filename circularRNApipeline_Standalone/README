@@ -1,8 +1,5 @@
 
-** Before attempting to run, make sure you have the Bowtie2 index files for your species 
-in circularRNApipeline_Standalone/index, the Bowtie1 index files in 
-circularRNApipeline_Standalone/denovo_scripts/index, and the gtf file in 
-circularRNApipeline_Standalone/denovo_scripts (see main project README for details).
+** Before attempting to run, follow INSTALL directions to configure and test your installation.
 
 ** You must cd into circularRNApipeline_Standalone and run the script completeRun.sh
 from within the directory so that all relative paths will work.
