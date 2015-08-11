@@ -28,7 +28,7 @@ Code and instructions for creating a new index are provided in createJunctionInd
 # Script Parameters
 Running the algorithm is slightly different in the Standalone or scheduler implementaions (see README files within those directories for exact usage information), but the parameters are the same. There are a total of 10 possible parameters, the first 5 are required and defaults for the rest are described here:
 
-- read_directory: full path to directory containing fastq files for alignment. Paired-end reads (PE) must have read1 and read2 in separate files. The file names for a given sample must start with an identical string that identifies the sample and then have either _1, _R1, _2, or _R2 identifying them as read1 or read2. Any part of the file name after this will be ignored. Reads
+- read_directory: absolute path to directory containing fastq files for alignment. Paired-end reads (PE) must have read1 and read2 in separate files. The file names for a given sample must start with an identical string that identifies the sample and then have either _1, _R1, _2, or _R2 identifying them as read1 or read2. Any part of the file name after this will be ignored. Reads
 may be in gzipped files or plain text fastq files. For simplicity, single end read files must follow naming requirements for read1 shown below (must have _1 or _R1 in file name). Valid naming examples are:
 
   ```
@@ -44,7 +44,7 @@ may be in gzipped files or plain text fastq files. For simplicity, single end re
   appended: the last character of the read id is different in the 2 read files for mates
   ```
   
-- alignment_parent_directory: full path to directory where the dataset analysis output and log files will be stored. This directory must already exist, and a directory named dataset_name (see below) will be created under this directory for all output files.
+- alignment_parent_directory: absolute path to directory where the dataset analysis output and log files will be stored. This directory must already exist, and a directory named dataset_name (see below) will be created under this directory for all output files.
 
 - dataset_name: string identifier for this dataset. A folder of this name will be created under alignment_parent_directory (see above) and all output for this run will be stored in this directory.
 
