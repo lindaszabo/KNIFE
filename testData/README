@@ -19,7 +19,7 @@ determined as outlined in the project README to be appropriate for this dataset.
  
 Running on cluster: sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
 
-Running on single machine: sh completeRun.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 phred64 circReads 40
+Running on single machine: sh completeRun.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 phred64 circReads 40 2>&1 | tee out.log
 
 3. Confirm output: 
 
