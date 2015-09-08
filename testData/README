@@ -9,6 +9,9 @@ are the main output files of interest to confirm at each step. Note that glmRepo
 and sampleStats files might not exactly match results provided in testOutput due to slight
 differences in software versions but the results should be close.
 
+The log file provided shows output from running the Standalone code. Similar logs are expected 
+from the running the code on a cluseter, but will be output into several files under OUTPUT_DIRECTORY/logs
+
 1. cd into directory containing findCircularRNA.sh
 
 2. To find annotated linear and circular junctions, run the following command after
@@ -42,5 +45,26 @@ Running on single machine: skip to next step, everything was already run in the 
 5. Confirm denovo output:
 
 OUTPUT_DIRECTORY/circReads/reports/unaligned_SRR1027187_1_denovo_report.txt 
+
+#########################
+# TROUBLESHOOTING / FAQ
+#########################
+
+1. What if I get report files but the read counts do not match those provided in example reports?
+
+The most likely issue is that Bowtie is running out of memory but is failing silently. When this happens 
+a valid, but incomplete, sam alignment file is output. You can confirm this is the issue by comparing the 
+number of alignments reported by bowtie2 in stderr or the scheduler .err files in OUTPUT_DIRECTORY/logs/align
+to the number of alignments in the sam file. If for example this is the Bowtie2 log output, then you should have 2461421 
+alignments (591803 + 1869618) in the sam file (2461421 alignment lines + 2 header lines):
+
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    16846894 (87.25%) aligned 0 times
+    591803 (3.07%) aligned exactly 1 time
+    1869618 (9.68%) aligned >1 times
+
+
+
 
 
