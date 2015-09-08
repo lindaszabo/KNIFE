@@ -1,0 +1,779 @@
+./findCircularRNA.sh "/home/linda/reads/testData_9_3 complete /home/linda/alignments/ testData_9_3 8 phred64 circReads 40"
+MODE is phred64
+Launched 3 align.sh's into the background Thu Sep 3 14:40:38 PDT 2015
+MODE is phred64
+Launched 3 align.sh's into the background Thu Sep 3 14:40:38 PDT 2015
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    8139797 (42.16%) aligned 0 times
+    11168518 (57.84%) aligned exactly 1 time
+    0 (0.00%) aligned >1 times
+57.84% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    8189906 (42.42%) aligned 0 times
+    11118409 (57.58%) aligned exactly 1 time
+    0 (0.00%) aligned >1 times
+57.58% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    2316289 (12.00%) aligned 0 times
+    12984393 (67.25%) aligned exactly 1 time
+    4007633 (20.76%) aligned >1 times
+88.00% overall alignment rate
+Done looping over bowtie, awaiting the last few align.sh to finish Thu Sep 3 15:05:14 PDT 2015
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    2193364 (11.36%) aligned 0 times
+    13068949 (67.69%) aligned exactly 1 time
+    4046002 (20.95%) aligned >1 times
+88.64% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    6753712 (34.98%) aligned 0 times
+    8563772 (44.35%) aligned exactly 1 time
+    3990831 (20.67%) aligned >1 times
+65.02% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    6692804 (34.66%) aligned 0 times
+    8628848 (44.69%) aligned exactly 1 time
+    3986663 (20.65%) aligned >1 times
+65.34% overall alignment rate
+All non-junction align.sh are doneThu Sep 3 15:17:58 PDT 2015
+starting junction align
+Launched 2 junction aligns into the background Thu Sep 3 15:17:58 PDT 2015
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    17458312 (90.42%) aligned 0 times
+    28443 (0.15%) aligned exactly 1 time
+    1821560 (9.43%) aligned >1 times
+9.58% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    16871307 (87.38%) aligned 0 times
+    588439 (3.05%) aligned exactly 1 time
+    1848569 (9.57%) aligned >1 times
+12.62% overall alignment rate
+Launched 2 junction aligns into the background Thu Sep 3 15:26:33 PDT 2015
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    17437288 (90.31%) aligned 0 times
+    28949 (0.15%) aligned exactly 1 time
+    1842078 (9.54%) aligned >1 times
+9.69% overall alignment rate
+19308315 reads; of these:
+  19308315 (100.00%) were unpaired; of these:
+    16846894 (87.25%) aligned 0 times
+    591803 (3.07%) aligned exactly 1 time
+    1869618 (9.68%) aligned >1 times
+12.75% overall alignment rate
+All junction align.sh are doneThu Sep 3 15:34:59 PDT 2015
+ready to preprocess
+Launched preprocessAlignedReads.sh into the background Thu Sep 3 15:34:59 PDT 2015
+Launched preprocessAlignedReads.sh into the background Thu Sep 3 15:34:59 PDT 2015
+Done looping over preprocessing, awaiting the last few preprocessAlignedReads.sh to finish Thu Sep 3 15:35:00 PDT 2015
+Launched filterFDR.sh into the background Thu Sep 3 15:45:28 PDT 2015
+Launched filterFDR.sh into the background Thu Sep 3 15:45:28 PDT 2015
+Done looping over filterFDR, awaiting the last few filterFDR.sh to finish Thu Sep 3 15:45:28 PDT 2015
+SAMPLE ID: SRR1027187_1
+SAMPLE_MATE_ID: SRR1027187_2
+READ_NUM: 1
+ALIGNED_SAMPLE_ID: SRR1027187_1
+ALIGNED_SAMPLE_MATE_ID: SRR1027187_2
+parentDir: /home/linda/alignments//testData_9_3
+sampleId: SRR1027187_1
+outDirName: circReads
+style: complete
+a1: None
+a2: None
+overhang: 8
+id dir suffix: 
+unaligned: False
+ignoreIds (aligned to genome): 18052320
+lienarIds: 600583
+scrambledIds: 1596
+samFile:/home/linda/alignments//testData_9_3/orig/reg/SRR1027187_1_reg_output.sam
+readType:r1rj
+samFile:/home/linda/alignments//testData_9_3/orig/junction/SRR1027187_1_junction_output.sam
+readType:r1j
+samFile:/home/linda/alignments//testData_9_3/orig/genome/SRR1027187_2_genome_output.sam
+readType:gMate
+samFile:/home/linda/alignments//testData_9_3/orig/reg/SRR1027187_2_reg_output.sam
+readType:rjMate
+samFile:/home/linda/alignments//testData_9_3/orig/junction/SRR1027187_2_junction_output.sam
+readType:jMate
+sample id: SRR1027187_1
+single end? False
+num junctions with aligned reads: 108891
+num reads: 602179
+number of reads kept in each category after update (multimapped & unknown should be 0, anomaly & decoy should be 0 for SE data):
+circ:  1239 , decoy:  138 , linear:  540223 , anomaly:  14517 , unmapped:  45662 , multimapped:  0 , unknown:  0
+601779
+using decoy rate: 0.00983559917901
+Completed 1 call to findCircularRNA.sh Thu Sep 3 15:52:13 PDT 2015
+./parseForAnalysis.sh /home/linda/alignments/ testData_9_3 phred64
+READ_NUM 2
+READ_NUM 1
+JUNC_SAM /home/linda/alignments//testData_9_3/orig/junction/SRR1027187_1_junction_output.sam
+REG_SAM /home/linda/alignments//testData_9_3/orig/reg/SRR1027187_1_reg_output.sam
+./predictJunctions.sh /home/linda/alignments/ testData_9_3 phred64 circReads
+./predictJunctions_tableData.r /home/linda/alignments//testData_9_3/orig/temp/SRR1027187_1_reg_output.txt /home/linda/alignments//testData_9_3/orig/temp/SRR1027187_1_junction_output.txt /home/linda/alignments//testData_9_3/circReads/ids/SRR1027187_1__output.txt /home/linda/alignments//testData_9_3/circReads/glmModels/SRR1027187_1__glm.RData /home/linda/alignments//testData_9_3/circReads/glmReports/SRR1027187_1__linearJuncProbs.txt /home/linda/alignments//testData_9_3/circReads/glmReports/SRR1027187_1__circJuncProbs.txt
+Loading required package: data.table
+[1] "predict junctions called with args: /home/linda/alignments//testData_9_3/orig/temp/SRR1027187_1_reg_output.txt"                 
+[2] "predict junctions called with args: /home/linda/alignments//testData_9_3/orig/temp/SRR1027187_1_junction_output.txt"            
+[3] "predict junctions called with args: /home/linda/alignments//testData_9_3/circReads/ids/SRR1027187_1__output.txt"                
+[4] "predict junctions called with args: /home/linda/alignments//testData_9_3/circReads/glmModels/SRR1027187_1__glm.RData"           
+[5] "predict junctions called with args: /home/linda/alignments//testData_9_3/circReads/glmReports/SRR1027187_1__linearJuncProbs.txt"
+[6] "predict junctions called with args: /home/linda/alignments//testData_9_3/circReads/glmReports/SRR1027187_1__circJuncProbs.txt"  
+Read 19.8% of 1871027 rowsRead 28.9% of 1871027 rowsRead 35.3% of 1871027 rowsRead 42.8% of 1871027 rowsRead 51.3% of 1871027 rowsRead 60.9% of 1871027 rowsRead 70.0% of 1871027 rowsRead 77.0% of 1871027 rowsRead 83.4% of 1871027 rowsRead 89.8% of 1871027 rowsRead 96.2% of 1871027 rowsRead 1871027 rows and 7 (of 7) columns from 0.131 GB file in 00:00:16
+[1] "circular scores processed 1871027" "circular scores processed 7"      
+Read 0.0% of 2461421 rowsRead 14.2% of 2461421 rowsRead 32.5% of 2461421 rowsRead 54.0% of 2461421 rowsRead 74.8% of 2461421 rowsRead 91.4% of 2461421 rowsRead 2461421 rows and 7 (of 7) columns from 0.172 GB file in 00:00:13
+[1] "linear scores processed 2461421" "linear scores processed 7"      
+Read 36.6% of 601779 rowsRead 43.2% of 601779 rowsRead 83.1% of 601779 rowsRead 601779 rows and 4 (of 4) columns from 0.060 GB file in 00:00:07
+[1] "class info processed 601779" "class info processed 4"     
+        qual                                       junction is.pos overlap
+     1:   42       chr2|SRSF7:38975188|SRSF7:38973889|reg|-      1      22
+     2:   42    chr19|COL5A3:10071326|COL5A3:10071233|reg|-      1      15
+     3:   42       chr5|CANX:179151784|CANX:179153680|reg|+      1      16
+     4:   42      chr10|CCDC6:61574409|CCDC6:61572553|reg|-      1      18
+     5:   37 chr4|GUCY1B3:156716609|GUCY1B3:156717528|reg|+      1      10
+    ---                                                                   
+540357:    2      chr14|RNF31:24621201|DHRS2:24114035|rev|+      0       8
+540358:    0       chr6|MDC1:30671397|LY6G5C:31647045|rev|-      0      11
+540359:    0   chr5|TBC1D9B:179294444|MAPK9:179696409|rev|-      0       9
+540360:    3    chr6|ATF6B:32084256|HLA-DPA1:33037077|rev|-      0       9
+540361:    0      chr3|KLHL6:183273148|PARL:183585848|rev|-      0      11
+          lenAdjScore   cur_weight
+     1: -1.818182e-05 0.0002554501
+     2: -2.000000e-05 0.0002554501
+     3: -1.666667e-05 0.0002554501
+     4: -1.694915e-05 0.0002554501
+     5: -1.666667e-05 0.0002554501
+    ---                           
+540357: -8.335000e-02 1.0000000000
+540358: -2.000167e-01 1.0000000000
+540359: -8.335000e-02 1.0000000000
+540360: -8.335000e-02 1.0000000000
+540361: -2.000167e-01 1.0000000000
+[1] "1 total reads: 540361"
+[1] "both negative 94 out of  138"
+[1] "both positive 469951 out of  540223"
+[1] "classification errors 70316 out of 540361 0.130127821956063"
+               Estimate Std. Error    z value     Pr(>|z|)
+(Intercept) -1.53780258 0.68746256 -2.2369256 2.529120e-02
+overlap     -0.02241147 0.02432033 -0.9215114 3.567835e-01
+lenAdjScore  7.42395925 4.51573321  1.6440208 1.001719e-01
+qual         0.07595165 0.01571660  4.8325743 1.347788e-06
+[1] "2 total reads: 540361"
+[1] "both negative 94 out of  138"
+[1] "both positive 473689 out of  540223"
+[1] "classification errors 66578 out of 540361 0.123210224275993"
+               Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -3.01558381 1.43617820 -2.099728 3.575276e-02
+overlap     -0.05448317 0.04262824 -1.278101 2.012140e-01
+lenAdjScore 15.66928181 9.43748801  1.660323 9.684942e-02
+qual         0.16030811 0.03542125  4.525761 6.017856e-06
+./qualityStatsAll.sh /home/linda/alignments/ testData_9_3 circReads 40 
+Launched qualityStatsSingleSample.sh into the background Thu Sep 3 15:59:55 PDT 2015
+Launched qualityStatsSingleSample.sh into the background Thu Sep 3 15:59:55 PDT 2015
+Done looping over qualityStatsSingleSample, awaiting the last few qualityStatsSingleSample.sh to finish Thu Sep 3 15:59:55 PDT 2015
+find: `/home/linda/alignments//testData_9_3/circReads/ids/SRR1027187_2__output.txt': No such file or directory
+perl process_directory_unaligned.pl /home/linda/alignments/ testData_9_3 phred64 40 1
+mkdir -p /home/linda/alignments//testData_9_3/denovo_script_out/FILES are unaligned_SRR1027187_1.fq
+start is  and name is SRR1027187_1.fqperl align_unaligned_in_pieces_step2.pl SRR1027187_1.fq /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq index/hg19_genome 40 /home/linda/alignments//testData_9_3/denovo_script_out/OPENING
+ input file is /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq
+bowtie --chunkmbs 256 -v 2 --un /home/linda/alignments//testData_9_3/denovo_script_out/unaligned_3prime_SRR1027187_1.fq --trim5 40 -p 2 -m 1 index/hg19_genome /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq > /home/linda/alignments//testData_9_3/denovo_script_out/3prime_40_SRR1027187_1.fq.out
+bowtie --chunkmbs 256 -v 2 --un /home/linda/alignments//testData_9_3/denovo_script_out/unaligned_3prime_SRR1027187_1.fq --trim3 40  -p 2 -m 1 index/hg19_genome /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq > /home/linda/alignments//testData_9_3/denovo_script_out/5prime_40_SRR1027187_1.fq.out
+# reads processed: 530577
+# reads with at least one reported alignment: 16414 (3.09%)
+# reads that failed to align: 10705 (2.02%)
+# reads with alignments suppressed due to -m: 503458 (94.89%)
+Reported 16414 alignments to 1 output stream(s)
+# reads processed: 530577
+# reads with at least one reported alignment: 17079 (3.22%)
+# reads that failed to align: 12979 (2.45%)
+# reads with alignments suppressed due to -m: 500519 (94.33%)
+Reported 17079 alignments to 1 output stream(s)
+sample is  and COMPLETED ALIGNMENTS files are /home/linda/alignments//testData_9_3/denovo_script_out/3prime_40_SRR1027187_1.fq.out and /home/linda/alignments//testData_9_3/denovo_script_out/5prime_40_SRR1027187_1.fq.out and 
+threeprimeinputfile is /home/linda/alignments//testData_9_3/denovo_script_out/3prime_40_SRR1027187_1.fq.out
+ perl stat_read_matchup_3a.pl /home/linda/alignments//testData_9_3/denovo_script_out/5prime_40_SRR1027187_1.fq.out /home/linda/alignments//testData_9_3/denovo_script_out/3prime_40_SRR1027187_1.fq.out 1 /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq testData_9_3 /home/linda/alignments//testData_9_3/denovo_script_out/ > /home/linda/alignments//testData_9_3/denovo_script_out/testtestData_9_3
+perl test_stats_step2_3c.pl /home/linda/alignments//testData_9_3/denovo_script_out/ testData_9_3 > /home/linda/alignments//testData_9_3/denovo_script_out/testnewtestData_9_3
+perl retreive_represent.pl /home/linda/alignments//testData_9_3/orig/unaligned/forDenovoIndex/unaligned_SRR1027187_1.fq /home/linda/alignments//testData_9_3/denovo_script_out/testnewSRR1027187_1.fq /home/linda/alignments//testData_9_3/denovo_script_out/output_SRR1027187_1.fq
+STARTING TO RETRIEVE
+STARTING TO RETRIEVE
+STARTING TO RETRIEVE
+Settings:
+  Output files: "denovo_testData_9_3_1.*.bt2"
+  Line rate: 6 (line is 64 bytes)
+  Lines per side: 1 (side is 64 bytes)
+  Offset rate: 4 (one in 16)
+  FTable chars: 10
+  Strings: unpacked
+  Max bucket size: default
+  Max bucket size, sqrt multiplier: default
+  Max bucket size, len divisor: 4
+  Difference-cover sample period: 1024
+  Endianness: little
+  Actual local endianness: little
+  Sanity checking: disabled
+  Assertions: disabled
+  Random seed: 0
+  Sizeofs: void*:8, int:4, long:8, size_t:8
+Input files DNA, FASTA:
+  denovo_testData_9_3_onlycircles1.fa
+Building a SMALL index
+Reading reference sizes
+  Time reading reference sizes: 00:00:00
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:00
+bmax according to bmaxDivN setting: 30
+Using parameters --bmax 23 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 23 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:00
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:00
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:00
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 11 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Split 1, merged 4; iterating...
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 14.125 (target: 22)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 3
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 4
+Getting block 2 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 22
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 23
+Getting block 3 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 21
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 22
+Getting block 4 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 12
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 13
+Getting block 5 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 19
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 20
+Getting block 6 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 13
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 14
+Getting block 7 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 22
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 23
+Getting block 8 of 8
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 1
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 2
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 15
+fchr[G]: 61
+fchr[T]: 93
+fchr[$]: 120
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 4194708 bytes to primary EBWT file: denovo_testData_9_3_1.1.bt2
+Wrote 36 bytes to secondary EBWT file: denovo_testData_9_3_1.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 120
+    bwtLen: 121
+    sz: 30
+    bwtSz: 31
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 8
+    offsSz: 32
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 1
+    numLines: 1
+    ebwtTotLen: 64
+    ebwtTotSz: 64
+    color: 0
+    reverse: 0
+Total time for call to driver() for forward index: 00:00:00
+Reading reference sizes
+  Time reading reference sizes: 00:00:00
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:00
+  Time to reverse reference sequence: 00:00:00
+bmax according to bmaxDivN setting: 30
+Using parameters --bmax 23 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 23 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:00
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:00
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:00
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 11 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 16.2857 (target: 22)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 19
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 20
+Getting block 2 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 20
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 21
+Getting block 3 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 20
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 21
+Getting block 4 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 12
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 13
+Getting block 5 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 21
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 22
+Getting block 6 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 21
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 22
+Getting block 7 of 7
+  Reserving size (23) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 1
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 2
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 15
+fchr[G]: 61
+fchr[T]: 93
+fchr[$]: 120
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 4194708 bytes to primary EBWT file: denovo_testData_9_3_1.rev.1.bt2
+Wrote 36 bytes to secondary EBWT file: denovo_testData_9_3_1.rev.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 120
+    bwtLen: 121
+    sz: 30
+    bwtSz: 31
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 8
+    offsSz: 32
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 1
+    numLines: 1
+    ebwtTotLen: 64
+    ebwtTotSz: 64
+    color: 0
+    reverse: 1
+Total time for backward call to driver() for mirror index: 00:00:00
+./findCircularRNA.sh /home/linda/reads/testData_9_3 complete /home/linda/alignments/ testData_9_3 8 phred64_unaligned circReads 40 1    
+MODE is phred64_unaligned
+Launched align into the background Thu Sep 3 16:13:01 PDT 2015
+MODE is phred64_unaligned
+Launched align into the background Thu Sep 3 16:13:01 PDT 2015
+Done looping over bowtie, awaiting the last few align.sh to finish Thu Sep 3 16:13:01 PDT 2015
+530577 reads; of these:
+  530577 (100.00%) were unpaired; of these:
+    530558 (100.00%) aligned 0 times
+    19 (0.00%) aligned exactly 1 time
+    0 (0.00%) aligned >1 times
+0.00% overall alignment rate
+688873 reads; of these:
+  688873 (100.00%) were unpaired; of these:
+    688866 (100.00%) aligned 0 times
+    7 (0.00%) aligned exactly 1 time
+    0 (0.00%) aligned >1 times
+0.00% overall alignment rate
+All non-junction align.sh are doneThu Sep 3 16:13:19 PDT 2015
+ready to preprocess
+Launched preprocessAlignedReads.sh into the background Thu Sep 3 16:13:19 PDT 2015
+Launched preprocessAlignedReads.sh into the background Thu Sep 3 16:13:19 PDT 2015
+Done looping over preprocessing, awaiting the last few preprocessAlignedReads.sh to finish Thu Sep 3 16:13:19 PDT 2015
+Launched filterFDR.sh into the background Thu Sep 3 16:18:19 PDT 2015
+SAMPLE ID: unaligned_SRR1027187_1
+SAMPLE_MATE_ID: unaligned_SRR1027187_2
+READ_NUM: 1
+ALIGNED_SAMPLE_ID: SRR1027187_1
+ALIGNED_SAMPLE_MATE_ID: SRR1027187_2
+Launched filterFDR.sh into the background Thu Sep 3 16:18:19 PDT 2015
+Done looping over filterFDR, awaiting the last few filterFDR.sh to finish Thu Sep 3 16:18:19 PDT 2015
+parentDir: /home/linda/alignments//testData_9_3
+sampleId: unaligned_SRR1027187_1
+outDirName: circReads
+style: complete
+a1: None
+a2: None
+overhang: 8
+id dir suffix: 
+unaligned: True
+ignoreIds (aligned to genome): 0
+lienarIds: 0
+scrambledIds: 19
+samFile:/home/linda/alignments//testData_9_3/orig/denovo/unaligned_SRR1027187_1_denovo_output.sam
+readType:r1j
+samFile:/home/linda/alignments//testData_9_3/orig/genome/SRR1027187_2_genome_output.sam
+readType:gMate
+samFile:/home/linda/alignments//testData_9_3/orig/reg/SRR1027187_2_reg_output.sam
+readType:rjMate
+samFile:/home/linda/alignments//testData_9_3/orig/junction/SRR1027187_2_junction_output.sam
+readType:jMate
+samFile:/home/linda/alignments//testData_9_3/orig/denovo/unaligned_SRR1027187_2_denovo_output.sam
+readType:dMate
+sample id: unaligned_SRR1027187_1
+single end? False
+num junctions with aligned reads: 2
+num reads: 19
+number of reads kept in each category after update (multimapped & unknown should be 0, anomaly & decoy should be 0 for SE data):
+circ:  1 , decoy:  18 , linear:  0 , anomaly:  0 , unmapped:  0 , multimapped:  0 , unknown:  0
+19
+using decoy rate: 0.00394524959742
+Completed 1 call to findCircularRNA.sh Thu Sep 3 16:22:11 PDT 2015
