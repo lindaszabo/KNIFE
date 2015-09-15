@@ -1,6 +1,8 @@
 # KNIFE
 Known and Novel IsoForm Explorer. Statistically based splicing detection for circular and linear isoforms from RNA-Seq data.
 
+Note: It has been brought to our attention that there was a discrepancy in the SRA annotations in the NCBI short read archive for the HeLa samples we analyzed for Figure 3 in our manuscript and their true identity. Please see misAnnotationUpdate.zip available in Downloads under release v1.2 for updated analysis.  
+
 # Overview
 This statistical algorithm increases the sensitivity and specificy of circularRNA detection from RNA-Seq data by quantifying circular and linear RNA splicing events at both annotated and un-annotated exon boundaries. It can analyze single-end or paired-end reads stored in plain-text fastq or gzipped fastq files. A version of the code that runs on a single Linux machine is provided in circularRNApipeline_Standalone. circularRNApipeline_SLURM contains code that provides the same results, but includes wrapper scripts to run on a cluster using the SLURM scheduler. Similarly, circularRNApipeline_SGE includes wrapper scripts to run on a cluster using a Sun Grid Engine scheduler. Parameters and output files are described below, and README files within each of these code directories contain detailed instructions for exactly how to run the code. 
 
