@@ -31,7 +31,7 @@ Code and instructions for creating a new index are provided in createJunctionInd
 Running the algorithm is slightly different in the Standalone or scheduler implementaions (see README files within those directories for exact usage information), but the parameters are the same. There are a total of 10 possible parameters, the first 5 are required and defaults for the rest are described here:
 
 - read_directory: absolute path to directory containing fastq files for alignment. Paired-end reads (PE) must have read1 and read2 in separate files. The file names for a given sample must start with an identical string that identifies the sample and then have either _1, _R1, _2, or _R2 identifying them as read1 or read2. Any part of the file name after this will be ignored. Reads
-may be in gzipped files or plain text fastq files. For simplicity, single end read files must follow naming requirements for read1 shown below (must have _1 or _R1 in file name). Valid naming examples are:
+may be in gzipped files or plain text fastq files. Read file names must not contain the string "unaligned_" as this will interfere with logic around identifying de novo junctions. For simplicity, single end read files must follow naming requirements for read1 shown below (must have _1 or _R1 in file name). Valid naming examples are:
 
   ```
   SAMPLENAME_1.fastq, SAMPLENAME_2.fastq
