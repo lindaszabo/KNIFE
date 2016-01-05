@@ -42,7 +42,8 @@ Running the algorithm is slightly different in the Standalone or scheduler imple
 
   ```
   complete: read ids in the fastq files for read 1 and read 2 are identical for mates
-  appended: the last character of the read id is different in the 2 read files for mates (ex: @787_327_212/1, @27847_787_327_212/2)
+  appended: the last character of the read id is different in the 2 read files for mates 
+            (ex: @787_327_212/1, @27847_787_327_212/2)
   ```
   
 - alignment_parent_directory: absolute path to directory where the dataset analysis output and log files will be stored. This directory must already exist, and a directory named dataset_name (see below) will be created under this directory for all output files.
