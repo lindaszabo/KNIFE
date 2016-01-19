@@ -80,7 +80,7 @@ Running the algorithm is slightly different in the Standalone or scheduler imple
 All output files can be found under [alignment_parent_directory]/[dataset_name] as specified when the script is called. Within this directory the following subdirectories will be created:
 
 1. circReads (or the directory will be named as specified by the [report_directory_name] parameter). The primary output files you will be interested in looking at are in the following subdirectories. 
-    1. reports: read count and p-value per junction using naive method. 2 files created per sample, 1 for annotated junctions (linear and circular) and the other for de novo junctions. 
+    1. reports: read count and p-value per junction using naive method. 2 files created per sample, 1 for annotated junctions (linear and circular) and the other for de novo junctions. For single end reads and de novo junctions from either single end or paired end data, these are the output files of interest as GLM reports are for annotated junctions using paired end data only. You will want to select a threshold on the p-value for which of these junctions are considered true positive circles. For the publication, we considered all junctions with a p-value of 0.9 or higher, at least 2 reads, and a decoy/circ read count ratio of 0.1 or lower.
       - junction: chr|gene1_symbol:splice_position|gene2_symbol:splice_position|junction_type|strand
         - junction types are reg (linear), rev (circle formed from 2 or more exons), or dup (circle formed from single exon)
       - linear: number of reads where read1 aligned to this linear junction and read2 was consistent with presumed splice event, or just number of aligned reads to this linear junction for SE reads
@@ -89,13 +89,13 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
       - multimapped: N/A
       - circ: number of reads where read1 aligned to this circular junction and read2 was consistent with presumed splice event, or just number of aligned reads to this circular junction for SE reads
       - decoy: number of reads where read2 was inconsistent with read1 alignment to this circular junction
-      - pvalue: naive method p-value for this junction based on all aligned reads (higher = more likely true positive)
+      - pvalue: naive method p-value for this junction based on all aligned reads (higher = more likely true positive). You will want to select a threshold on the p-value for which of these junctions are considered true positive circles. For the 
       - scores: (read1, read2) Bowtie2 alignment scores for each read aligning to this junction, or scores at each 10th percentile for junctions with more than 10 reads
-    2. glmReports: read count and posterior probability per junction using GLM (only for PE reads, annotation-dependent junctions). 2 files created per sample, 1 with circular splice junctions and the other with linear splice junctions
+    2. glmReports: read count and posterior probability per junction using GLM (only for PE reads, annotation-dependent junctions). 2 files created per sample, 1 with circular splice junctions and the other with linear splice junctions. You will want to select a threshold on the posterior probability for which of these junctions are considered true positive circles. For the publication, we considered all junctions with a posterior probability of 0.9 or higher.
       - junction: chr|gene1_symbol:splice_position|gene2_symbol:splice_position|junction_type|strand
         - junction types are reg (linear), rev (circle formed from 2 or more exons), or dup (circle formed from single exon)
       - numReads: number of reads where read1 aligned to this junction and read2 was consistent with presumed splice event
-      - p_predicted: posterior probability that the junction is a true junction
+      - p_predicted: posterior probability that the junction is a true junction (higher = more likely true positive). 
       - p_value: p-value for the posterior probability to control for the effect of total junctional counts on posterior probability
     3. glmModels: RData files containing the model used to generate the glmReports 
     4.  ids: alignment and category assignment per read
