@@ -143,6 +143,9 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   4. denovo_script_out: debugging output generated during creation of de novo index.
   5. sampleStats: logs from generating sample statistics files
 
+# Selecting High Quality Circular and Linear Junctions
+True circular and linear junctions are a subset of the reported junctions. All identified junctional reads are reported along with a posterior probability (GLM reports) or p-value (naive reports). Instead of selected a threshold on read counts as you would for other circular RNA algorithms, you will select a threshold on these statistical scores and filter the reports. For the publication, we generally considered junctions with a score of 0.9 or higher to be true positive circular RNA (see publication for details). You can filter the results on read count as well if you want to limit your analysis to highly expressed RNA.
+
 # Verifying Installation
 Pre-trimmed fastq files for 1 human sample are provided with the release of v1.1. See the README under testData for instructions to run KNIFE on this sample. Expected results are provided in testData/testOutput.
 
