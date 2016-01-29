@@ -38,9 +38,12 @@ Running the algorithm is slightly different in the Standalone or scheduler imple
   SAMPLENAME_R1.fq, SAMPLENAME_R2.fq
   ```
 
-- read_id_style: complete|appended (use complete for single end)
-
-  ```
+- read_id_style: complete|appended (use complete for single end). The read id is only what is up to the first space on the sequence identifier line. Everything after that is an optional description and is ignored. So for example, if the sequence identifier lines in your 2 files are: 
+```
+ @SRR445016.1 UNC15-SN850_0140:1:1101:1247:2164/1
+ @SRR445016.1 UNC15-SN850_0140:1:1101:1247:2164/2
+ then the read id is SRR445016.1 and the style "complete" should be used
+ 
   complete: read ids in the fastq files for read 1 and read 2 are identical for mates
   appended: the last character of the read id is different in the 2 read files for mates 
             (ex: @27847_787_327_212/1, @27847_787_327_212/2)
