@@ -32,7 +32,7 @@ and SRR1027187_1__circJuncProbs.txt
 b) OUTPUT_DIRECTORY/sampleStats contains SampleAlignStats.txt and SampleCircStats.txt
 
 c) denovo index was created: 6 bowtie2 index files named denovo_testData* and
-denovo_testData_onlycircles1.fa were generated in CODE_DIRECTORY/denovo_scripts/.
+denovo_testData_onlycircles1.fa were generated in OUTPUT_DIRECTORY/logs/denovo_index/.
 
 4. To align to the denovo index and find unannotated circular junctions, run the
 following command, with READ_DIRECTORY and OUTPUT_DIRECTORY matching what you used
