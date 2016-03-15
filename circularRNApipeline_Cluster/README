@@ -1,4 +1,15 @@
 
+** Before attempting to run, follow INSTALL directions to configure and test your installation.
+
+** There are a total of 10 possible parameters, the first 5 are required and
+defaults for the rest are described in the main project README. Keep in mind that since this is a
+shell script the arguments are positional. This means that if you wanted to use
+default value for argument 6 but wanted to specify a different value for
+parameter 7, you still need to call the script with the default value for
+argument 6 specified.
+
+** see README on main project page for details on each of these parameters
+
 ##########################
 ## USAGE
 ##########################
