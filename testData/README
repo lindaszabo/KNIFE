@@ -10,9 +10,12 @@ and sampleStats files might not exactly match results provided in testOutput due
 differences in software versions but the results should be close.
 
 The log file provided shows output from running the Standalone code. Similar logs are expected 
-from the running the code on a cluseter, but will be output into several files under OUTPUT_DIRECTORY/logs
+from the running the code on a Cluster, but will be output into several files under OUTPUT_DIRECTORY/logs
 
-1. cd into directory containing findCircularRNA.sh
+findCircularRNA***.sh below refers to findCircularRNA***.sh, findCircularRNA_SLURM.sh or findCircularRNA_SGE.sh
+depending on how you are running the code
+
+1. cd into directory containing findCircularRNA***.sh 
 
 2. To find annotated linear and circular junctions, run the following command after
 replacing READ_DIRECTORY with the absolute path to the directory containing the
@@ -20,7 +23,7 @@ test fq.gz files and OUTPUT_DIRECTORY with the absolute path to the directory
 where you want the output. All other parameters should be left as is, they were
 determined as outlined in the project README to be appropriate for this dataset. 
  
-Running on cluster: sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
+Running on cluster: sh findCircularRNA***.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64 circReads 40
 
 Running on single machine: sh completeRun.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 phred64 circReads 40 2>&1 | tee out.log
 
@@ -45,6 +48,20 @@ Running on single machine: skip to next step, everything was already run in the 
 5. Confirm denovo output:
 
 OUTPUT_DIRECTORY/circReads/reports/unaligned_SRR1027187_1_denovo_report.txt 
+
+6. To increase sensitivity and improve quantification estimates, run the following command to
+generate reports that count both R1 and R2 junctional alignments (above alignments only considered
+R1 junctional alignments).
+
+Running on cluster: sh findCircularRNA.sh READ_DIRECTORY complete OUTPUT_DIRECTORY testData 8 sam_large_phred64_R2analysis circReads 40
+
+Running on single machine: skip to next step, everything was already run in the call above to completeRun.sh
+
+7. Confirm combined report output:
+
+OUTPUT_DIRECTORY/circReads/combinedReports contains SRR1027187_1__linearJuncProbs.txt, SRR1027187_1__circJuncProbs.txt,
+and naiveunaligned_SRR1027187_1_denovo_report.txt
+
 
 #########################
 # TROUBLESHOOTING / FAQ

@@ -1,0 +1,3 @@
+junction	orig_circOrLinear	orig_decoyOrAnom	orig_unmapped	orig_pval	swapped_circOrLinear	swapped_decoyOrAnom	swapped_unmapped	swapped_pval	total_reads
+chr14|-0-2-2_seqlength-60-PARP2:20811350|-0-2-2_seqlength-60-PARP2:20811400|rev|+	1	17	0	0.745396513019	2	5	0	0.557035292953	3
+chr1|-0-2-2_seqlength-60-PKN2:89150100|-0-2-2_seqlength-60-PKN2:89150150|rev|+	0	1	0	-	0	0	0	0	0
