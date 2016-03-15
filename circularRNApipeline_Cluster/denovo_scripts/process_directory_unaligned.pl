@@ -14,7 +14,10 @@ $tempResultDir=$alignDir."/".$screen."/logs/denovo_index/";
 ############## select reference based on mode
 ###########################################################################
 
-if (index($mode, "mouse") != -1){
+if (index($mode, "grch38") != -1){
+    $reference="index/grch38_genome";
+    $gtf="grch38_genes.gtf";
+} elsif (index($mode, "mouse") != -1){
     $reference="index/mm10_genome";
     $gtf="mm10_genes.gtf";
 } elsif (index($mode, "rat") != -1){

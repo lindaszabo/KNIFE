@@ -1,6 +1,12 @@
 #!/bin/sh
 
-# params are: ALIGN_PARDIR, DATASET_NAME, MODE, NTRIM, DENOVOCIRC
+# params are: ALIGN_PARDIR, DATASET_NAME, MODE, NTRIM, DENOVOCIRC, CLUSTERTYPE
+
+echo "in denovo_scripts.batch"
+echo "arg 6 is ${6}"
+CLUSTER_TYPE=$6
+echo "CLUSTER_TYPE is ${CLUSTER_TYPE}"
+source ./depends_denovo.sh ${CLUSTER_TYPE}  # load bowtie1
 
 perl process_directory_unaligned.pl ${1} ${2} ${3} ${4} ${5}
 

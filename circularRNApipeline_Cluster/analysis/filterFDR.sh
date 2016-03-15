@@ -19,6 +19,7 @@ else
   TASK_DATA_FILE="${ALIGN_PARDIR}/taskIdFiles/${DATASET_NAME}.txt"
 fi
 
+source ../depends.sh ${CLUSTER_TYPE} # load python module if necessary
 source ../sampleInfo.sh ${CLUSTER_TYPE} # get sample-specific variables from TASK_DATA_FILE
 SAMPLE_MATE_ID=`echo ${SAMPLE_ID%?}2`  # will be full sample id with trailing 1 replaced by 2
 READ_NUM=`echo ${SAMPLE_ID:(-1)}` # will be a 1 or 2
@@ -102,7 +103,9 @@ then
   fi
   
   # add param for unaligned mode
-  if [[ $MODE = *unaligned* ]]
+  # to keep consistent as much as possible with StandAlone version of code,
+  # search for unalign instead of unaligned to handle Standalone code where R2analysis_unalign indicates run in unaligned mode on pre-existing files
+  if [[ $MODE = *unalign* ]]
   then
     OPT_ARGS=`echo ${OPT_ARGS} -u`
   fi

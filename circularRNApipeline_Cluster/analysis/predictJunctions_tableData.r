@@ -22,20 +22,12 @@ getOverlapForTrimmed <- function(x, juncMidpoint=150){
   return(overlap)
 }
 
-processScoreInput <- function(scoreFile){
-  scores = fread(scoreFile, header=FALSE, sep="\t")
-  setnames(scores,names(scores),c("id", "pos", "qual", "aScore", "numN", "readLen", "junction"))
-  setkey(scores, id)
-  
-  return(scores)
-}
-
 addDerivedFields <- function(dt, useClass){
   if(nrow(dt) > 0){
     # calculate and add on cols for junction overlap, score adjusted for N penalties, 
     dt[,`:=`(is.pos=useClass,overlap=apply(dt, 1, getOverlapForTrimmed), adjScore=aScore+numN)]  # syntax for multiple :=
     # and length-adjusted alignment score (laplace smoothing so alignment score of 0 treated different for different length reads)
-    dt[, lenAdjScore:=(adjScore - 0.001)/readLen]
+    dt[, lenAdjScore:=(as.numeric(adjScore) - 0.001)/as.numeric(readLen)]
     dt[,`:=`(pos=NULL, aScore=NULL, numN=NULL, readLen=NULL, adjScore=NULL)]
   }
   
@@ -44,8 +36,7 @@ addDerivedFields <- function(dt, useClass){
 
 # the input file is just the file output by the circularRNApipeline under /ids
 processClassInput <- function(classFile){
-  cats = fread(classFile, header=FALSE, sep="\t")
-  setnames(cats, names(cats), c("id", "R1", "R2", "class"))
+  cats = fread(classFile, header=TRUE, sep="\t")
   setkey(cats, id)
   
   return(cats)
@@ -90,39 +81,28 @@ applyToJunction <- function(dt, expr) {
 ######## END FUNCTIONS, BEGIN WORK #########
 
 args = commandArgs(trailingOnly = TRUE)
-linear_score_input = args[1]
-circ_score_input = args[2]
-class_input = args[3]
-data_out = args[4]
-linear_juncp_out = args[5] 
-circ_juncp_out = args[6]
+class_input = args[1]
+data_out = args[2]
+linear_juncp_out = args[3] 
+circ_juncp_out = args[4]
 print(paste("predict junctions called with args:", args))
 
 #### SEPARATE READ CLASSES AND PARSE RELEVANT INFO ####
 
-# the score file is generated from the junction sam file by parseForAnalysis.sh:
-myCircScores = processScoreInput(circ_score_input)
-print(paste("circular scores processed", dim(myCircScores)))
-myLinearScores = processScoreInput(linear_score_input)
-print(paste("linear scores processed", dim(myLinearScores)))
 myClasses = processClassInput(class_input)
 print(paste("class info processed", dim(myClasses)))
 
-# myClasses[(class %like% 'circ'), id] gives me a character vector of ids, the 2nd argument selects the desired fields from myCircScores
-circ_reads = myCircScores[myClasses[(class %like% 'circ'), id], list(id, pos, qual, aScore, numN, readLen, junction)]
+circ_reads = myClasses[(class %like% 'circ'), list(id, pos, qual, aScore, numN, readLen, junction)]
 circ_reads = addDerivedFields(circ_reads, 1)
 
-decoy_reads = myCircScores[myClasses[(class == 'decoy'), id], list(pos, qual, aScore, numN, readLen, junction)]
+decoy_reads = myClasses[(class == 'decoy'), list(id, pos, qual, aScore, numN, readLen, junction)]
 decoy_reads = addDerivedFields(decoy_reads, 0)
 
-linear_reads = myLinearScores[myClasses[(class %like% 'linear'), id], list(pos, qual, aScore, numN, readLen, junction)]
+linear_reads = myClasses[(class %like% 'linear'), list(id, pos, qual, aScore, numN, readLen, junction)]
 linear_reads = addDerivedFields(linear_reads, 1)
 
 # clean up
-rm(myCircScores)
 rm(myClasses)
-rm(myLinearScores)
-
 
 #### TRAIN EM ####
 
@@ -210,9 +190,6 @@ setnames(junctionPredictions, "iter_2", "p_predicted")
 
 save(saves, file=data_out)  # save models
 write.table(junctionPredictions, linear_juncp_out, row.names=FALSE, quote=FALSE, sep="\t")
-
-
-
 
 #### PREDICT CIRCULAR JUNCTIONS ####
 

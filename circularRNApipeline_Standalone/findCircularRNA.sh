@@ -68,7 +68,8 @@ else
 fi
 
 # a few special flags for the unaligned mode
-if [[ $MODE = *unaligned* ]]
+# checking for unalign instead of unaligned allows to select correct TASK_ID_FILE in R2 run too
+if [[ $MODE = *unalign* ]]
 then
   TASK_FILE_READ_DIR=${ALIGN_PARDIR}/${DATASET_NAME}/orig/unaligned
   UFLAG="-u"
@@ -79,13 +80,16 @@ else
 fi
 
 # set up info about this dataset, create directory structures
-if [[ $MODE != analysis* ]]
+if [[ $MODE != *analysis* ]]
 then
   # set up
   python analysis/writeTaskIdFiles.py -r ${TASK_FILE_READ_DIR} -a ${ALIGN_PARDIR} -d ${DATASET_NAME} ${UFLAG}
   
   # select correct prefix name to use for bowtie index files
-  if [[ $MODE = *mouse* ]]
+  if [[ $MODE = *grch38* ]]
+  then
+    bt_prefix="grch38"
+  elif [[ $MODE = *mouse* ]]
   then
     bt_prefix="mm10"
   elif [[ $MODE = *rat* ]]
@@ -129,6 +133,7 @@ NUM_FILES=`cat $TASK_DATA_FILE | wc -l`
 if [[ $MODE != *analysis* ]]
 then
   # have to be inside the index directory so bowtie can find the indices
+  # this block will not be run when called for R2 because we pass the string unalign instead of unaligned
   if [[ $MODE = *unaligned* ]]
   then
     cd denovo_scripts
@@ -199,6 +204,7 @@ echo "ready to preprocess"
 for (( i=1; i<=NUM_FILES; i++ ))
 do
   SAMPLE_ID=`awk 'FNR == '${i}' {print $2}' $TASK_DATA_FILE`
+  echo "analysis/preprocessAlignedReads.sh ${SAMPLE_ID} ${ALIGN_PARDIR} ${DATASET_NAME} ${JUNCTION_MIDPOINT} ${OVERLAP} ${JUNCTION_DIR_SUFFIX}"
   analysis/preprocessAlignedReads.sh ${SAMPLE_ID} ${ALIGN_PARDIR} ${DATASET_NAME} ${JUNCTION_MIDPOINT} ${OVERLAP} ${JUNCTION_DIR_SUFFIX} &
   echo "Launched preprocessAlignedReads.sh into the background "`date`
   run_count=`ps -ealf | grep preprocessAlignedReads.sh | grep ${USER} | grep -v grep | wc -l`
@@ -225,6 +231,7 @@ sleep 300
 for (( i=1; i<=NUM_FILES; i++ ))
 do
   SAMPLE_ID=`awk 'FNR == '${i}' {print $2}' $TASK_DATA_FILE`
+  echo "analysis/filterFDR.sh ${MODE} ${SAMPLE_ID} ${ALIGN_PARDIR} ${DATASET_NAME} ${REPORTDIR_NAME} ${READ_STYLE} ${OVERLAP} ${JUNCTION_DIR_SUFFIX} ${RD1_THRESH} ${RD2_THRESH}"
   analysis/filterFDR.sh ${MODE} ${SAMPLE_ID} ${ALIGN_PARDIR} ${DATASET_NAME} ${REPORTDIR_NAME} ${READ_STYLE} ${OVERLAP} ${JUNCTION_DIR_SUFFIX} ${RD1_THRESH} ${RD2_THRESH} &
   echo "Launched filterFDR.sh into the background "`date`
   run_count=`ps -ealf | grep filterFDR.sh | grep ${USER} | grep -v grep | wc -l`

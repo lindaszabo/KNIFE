@@ -7,15 +7,17 @@ $ntrim = $ARGV[3]; # number of nt to trim from each end (2N/3 is good rule of th
 $onlycircles = $ARGV[4];  # 0 if want linear and circular, 1 if want only circular in denovo index
 
 # make output directory for this dataset
-$tempOutDir=$alignDir."/".$screen."/denovo_script_out/";
-print "mkdir -p $tempOutDir";
-system ("mkdir -p ".$tempOutDir);
+$tempOutDir=$alignDir."/".$screen."/logs/denovo_script_out/";
+$tempResultDir=$alignDir."/".$screen."/logs/denovo_index/";
 
 ###########################################################################
 ############## select reference based on mode
 ###########################################################################
 
-if (index($mode, "mouse") != -1){
+if (index($mode, "grch38") != -1){
+    $reference="index/grch38_genome";
+    $gtf="grch38_genes.gtf";
+} elsif (index($mode, "mouse") != -1){
     $reference="index/mm10_genome";
     $gtf="mm10_genes.gtf";
 } elsif (index($mode, "rat") != -1){
@@ -99,8 +101,10 @@ system ("mv ".$tempOutDir."lindaOUTPUTEST".$screen." ".$tempOutDir."fasta_for_".
 ## generates representatives for each bin and probability, etc.
 system ("perl process_representatives_for_lindas_pipeline.pl ".$tempOutDir."fasta_for_".$screen." ".$gtf." > ".$tempOutDir."denovo_".$screen);
 ## consolidates all of these genes and values to be parsimonious
-system ("perl process_max_denovo.pl ".$tempOutDir."denovo_".$screen." > denovo_".$screen."_onlycircles".$onlycircles.".fa");
+system ("perl process_max_denovo.pl ".$tempOutDir."denovo_".$screen." > ".$tempResultDir."denovo_".$screen."_onlycircles".$onlycircles.".fa");
 
+print "chdir(".$tempResultDir.") or die\n";
+chdir($tempResultDir) or die "$!";
 system("bowtie2-build denovo_".$screen."_onlycircles".$onlycircles.".fa denovo_".$screen."_".$onlycircles);
 
 system ("rm ".$tempOutDir."hamming_".$screen);

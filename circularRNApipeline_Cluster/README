@@ -6,24 +6,34 @@
 If you are using a SLURM scheduler, you will run findCircularRNA_SLURM.sh and if
 you are using a Sun Grid Engine scheduler you will run findCircularRNA_SGE.sh.
 The code produces the same results, the only difference is scheduler-specific syntax.
-References below to findCircularRNA*.sh refer to either of these files.
+References below to findCircularRNA***.sh refer to either of these files.
 
 You must cd into circularRNApipeline_Cluster and run the script findCircularRNA*.sh
 from within the directory so that all relative paths will work.
 
 A complete analysis using these wrapper scripts to submit jobs to the scheduler requires 
-calling findCircularRNA.sh 2 times.
+calling findCircularRNA***.sh 3 times, altering the “mode” parameter each time.
 
   1) The first run generates the annotation-dependent reports, alignment statistics,
-     and creates the de novo index for this dataset.
+     and creates the de novo index for this dataset using read 1 (R1) junction alignments only.
      
-     sh findCircularRNA.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode junction_id_suffix
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode junction_id_suffix
 
   2) For the second run, use all the same parameters from the first run but append
      the string "_unaligned" to the mode. This generates the de novo reports by aligning
      unaligned reads to the de novo index created for this dataset during the first run. 
+     This step also uses R1 junction alignments only.
 
-     sh findCircularRNA.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_unaligned report_directory_name ntrim denovoCircMode junction_id_suffix
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_unaligned report_directory_name ntrim denovoCircMode junction_id_suffix
+
+  3) For the third run, use all the same parameters from the first run but append
+     the string “_R2analysis” to the mode. This will re-run the annotation-dependent and de novo
+     analysis (steps 1 and 2) looking for all R2 junction alignments this time. Note that this step 
+     was not performed for the results presented in the publication, we only considered R1 junction 
+     alignments. Consolidated reports counting alignments from both R1 and R2 will be output under
+     alignment_parent_directory/dataset_name/report_directory_name/combinedReports.
+
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_R2analysis report_directory_name ntrim denovoCircMode junction_id_suffix
 
 See main project README file for parameter descriptions and default values. In addition
 to the possible values for the "mode" parameter described in the project README,

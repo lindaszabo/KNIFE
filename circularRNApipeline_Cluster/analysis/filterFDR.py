@@ -18,6 +18,7 @@ from utils_juncReads_minimal import *
 from scipy.stats import scoreatpercentile
 from scipy.stats import norm
 from math import sqrt
+import sys
 
 JUNC_MIDPOINT = 150  
 
@@ -39,64 +40,83 @@ def selectCandidateIds():
     # only need to look for ids to exclude if we are not looking at previously unaligned reads
     if not args.unalignedMode:
         # get ribo ids
-        handle = open("".join(["/".join([idDir, "ribo", args.sampleId]), "_ribo_output.txt"]), "rU")
-        if args.fastqIdStyle == "appended":
-            for line in handle:
-                ignoreIds[line.split()[0][:-1]] = None
-        else:
-            for line in handle:
-                ignoreIds[line.split()[0]] = None
-        handle.close()
+        try:
+            handle = open("".join(["/".join([idDir, "ribo", args.sampleId]), "_ribo_output.txt"]), "rU")
+            if args.fastqIdStyle == "appended":
+                for line in handle:
+                    ignoreIds[line.strip().split()[0][:-1]] = None
+            else:
+                for line in handle:
+                    ignoreIds[line.strip().split()[0]] = None
+            handle.close()
+        except:
+            print "error parsing ribo ids for", line
         
         # load genome aligned id file for the same sample and add to ignoreIds
         handle = open("".join(["/".join([idDir, "genome", args.sampleId]), "_genome_output.txt"]), "rU")
-        
+            
         if args.fastqIdStyle == "appended":
             for line in handle:
-                ignoreIds[line.split()[0][:-1]] = None
+                try:
+                    ignoreIds[line.strip().split()[0][:-1]] = None
+                except TypeError as e:
+                    print "error parsing genome ids for", line
+                    print "Type error({0}): {1}".format(e.errno, e.strerror)
+                    print "error:", sys.exc_info()[0]
+                except:
+                    print "error parsing genome ids for", line
+                    print "error:", sys.exc_info()[0] 
         else:
             for line in handle:
-                ignoreIds[line.split()[0]] = None       
+                ignoreIds[line.strip().split()[0]] = None       
         handle.close()
+        
         
         # load reg-junction aligned id file for same sample and load ids not in ignoreIds
-        handle = open("".join(["/".join([idDir, regIdDir, args.sampleId]), "_reg_output.txt"]), "rU")
-        for line in handle:
-            if args.fastqIdStyle == "appended":
-                testId = line.split()[0][:-1]
-            else:
-                testId = line.split()[0]
-                
-            if testId not in ignoreIds:
-                regIds[testId] = None
-        handle.close()
+        try:
+            handle = open("".join(["/".join([idDir, regIdDir, args.sampleId]), "_reg_output.txt"]), "rU")
+            for line in handle:
+                if args.fastqIdStyle == "appended":
+                    testId = line.strip().split()[0][:-1]
+                else:
+                    testId = line.strip().split()[0]
+                    
+                if testId not in ignoreIds:
+                    regIds[testId] = None
+            handle.close()
+        except:
+            print "error parsing reg ids for", line
     
     # load junction aligned id file (or de novo aligned id file) for same sample and load ids not in ignoreIds or regJuncIds
-    handle = open("_".join(["/".join([idDir, juncIdDir, args.sampleId]), useJuncStr, "output.txt"]), "rU")
-    for line in handle:
-        if args.fastqIdStyle == "appended":
-            testId = line.split()[0][:-1]
-        else:
-            testId = line.split()[0]
-            
-        if testId not in ignoreIds and testId not in regIds:
-            nonRegIds[testId] = None
-        
-            
-    handle.close()
+    try:
+        handle = open("_".join(["/".join([idDir, juncIdDir, args.sampleId]), useJuncStr, "output.txt"]), "rU")
+        for line in handle:
+            if args.fastqIdStyle == "appended":
+                testId = line.strip().split()[0][:-1]
+            else:
+                testId = line.strip().split()[0]
+                
+            if testId not in ignoreIds and testId not in regIds:
+                nonRegIds[testId] = None   
+        handle.close()
+    except:
+        print "error parsing junction ids for", line 
     
     # print out these ids for later debugging use
-    if args.unalignedMode:
-        out_handle = open("".join(["/".join([idDir, "denovoNonGR", args.sampleId]), "_output.txt"]), "wb")
-    else:
-        out_handle = open("".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"]), "wb")
-    for i in nonRegIds:
-        out_handle.write(i)
-        out_handle.write("\n")
-    for i in regIds:
-        out_handle.write(i)
-        out_handle.write("\n")
-    out_handle.close()
+    try:
+        if args.unalignedMode:
+            out_handle = open("".join(["/".join([idDir, "denovoNonGR", args.sampleId]), "_output.txt"]), "wb")
+        else:
+            out_handle = open("".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"]), "wb")
+        for i in nonRegIds:
+            out_handle.write(i)
+            out_handle.write("\n")
+        for i in regIds:
+            out_handle.write(i)
+            out_handle.write("\n")
+        out_handle.close()
+    except:
+        print "error writing ids for", i
 
       
 # Get mismatch rate for the decoys in this dataset. This is total_mismatches / total_bases
@@ -236,12 +256,16 @@ def reportCircularReads(cutoff):
             junctions[j].fdr = sig_stat  # will need to update this variable name in juncObj if we are using p-values in the future instead of FDRs
         
     report_handle.close()
-    
-def reportAllReadIds(cutoff):
+            
+def reportAllReadIds2(cutoff):
     if args.unalignedMode:
-        id_handle = open("_".join(["/".join([args.parentDir, args.outDirName, "ids", args.sampleId]), "denovo_output.txt"]), "wb")
+        id_handle = open("_".join(["/".join([args.parentDir, args.outDirName, "ids", args.sampleId]), "denovo__output.txt"]), "wb")
     else:
         id_handle = open("_".join(["/".join([args.parentDir, args.outDirName, "ids", args.sampleId]), "_output.txt"]), "wb")
+        
+    # use the column names used in R
+    id_handle.write("\t".join(["id", "class", "pos", "qual", "aScore", "numN", "readLen", "junction", "strand",
+                               "posR2", "qualR2", "aScoreR2", "numNR2", "readLenR2", "junctionR2", "strandR2"]) + "\n")
     
     for j in junctions:
         # print circular read ids
@@ -258,13 +282,17 @@ def reportAllReadIds(cutoff):
                     readClass = "circFailed"
             else:
                 readClass = "circStrong"
-            
+                
+            myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
             if args.singleEnd:
-                pairInfo = "NA"
+                pairInfo = "\t".join(["NA", "NA", "NA", "NA", "NA", "NA", "NA"])
             else:
-                pairInfo = ",".join([str(elem.useMate.refName), str(elem.useMate.offset), str(elem.useMate.flag)])
+                pairInfo = "\t".join([str(elem.useMate.offset),
+                                       str(elem.useMate.mapQual), str(elem.useMate.aScore), str(elem.useMate.numN), str(elem.useMate.readLen),
+                                       str(elem.useMate.refName), str(elem.useMate.flag)])
             
-            id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]), pairInfo, readClass]) + "\n")
+            id_handle.write("\t".join([str(elem.juncRead.name), readClass, myInfo, pairInfo]) + "\n")
         
         # print linear read ids
         for elem in junctions[j].linearReads:
@@ -279,35 +307,59 @@ def reportAllReadIds(cutoff):
             else:
                 readClass = "linearStrong"
             
+            myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
             if args.singleEnd:
-                pairInfo = "NA"
+                pairInfo = "\t".join(["NA", "NA", "NA", "NA", "NA", "NA", "NA"])
             else:
-                pairInfo = ",".join([str(elem.useMate.refName), str(elem.useMate.offset), str(elem.useMate.flag)])
-                
-            id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]), pairInfo, readClass]) + "\n")
+                pairInfo = "\t".join([str(elem.useMate.offset),
+                                       str(elem.useMate.mapQual), str(elem.useMate.aScore), str(elem.useMate.numN), str(elem.useMate.readLen),
+                                       str(elem.useMate.refName), str(elem.useMate.flag)])
+            
+            id_handle.write("\t".join([str(elem.juncRead.name), readClass, myInfo, pairInfo]) + "\n")
             
         # print multimapped read ids
         for elem in junctions[j].multimappedReads:
+            myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
             if args.singleEnd or not elem.useMate:
-                pairInfo = "NA"
+                pairInfo = "\t".join(["NA", "NA", "NA", "NA", "NA", "NA", "NA"])
             else:
-                pairInfo = ",".join([str(elem.useMate.refName), str(elem.useMate.offset), str(elem.useMate.flag)])
+                pairInfo = "\t".join([str(elem.useMate.offset),
+                                       str(elem.useMate.mapQual), str(elem.useMate.aScore), str(elem.useMate.numN), str(elem.useMate.readLen),
+                                       str(elem.useMate.refName), str(elem.useMate.flag)])
             
-            id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]), pairInfo, "multimapped"]) + "\n")
+            id_handle.write("\t".join([str(elem.juncRead.name), "multimapped", myInfo, pairInfo]) + "\n")
             
         # print decoy read ids
         if not args.singleEnd:
             for elem in junctions[j].decoyReads:
-                id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]),
-                                           ",".join([str(elem.useMate.refName), str(elem.useMate.offset), str(elem.useMate.flag)]), "decoy"]) + "\n")
+                myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
+
+                pairInfo = "\t".join([str(elem.useMate.offset),
+                                       str(elem.useMate.mapQual), str(elem.useMate.aScore), str(elem.useMate.numN), str(elem.useMate.readLen),
+                                       str(elem.useMate.refName), str(elem.useMate.flag)])
+        
+                id_handle.write("\t".join([str(elem.juncRead.name), "decoy", myInfo, pairInfo]) + "\n")
+                
             # print anomaly read ids
             for elem in junctions[j].anomalyReads:
-                id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]),
-                                           ",".join([str(elem.useMate.refName), str(elem.useMate.offset), str(elem.useMate.flag)]), "anomaly"]) + "\n")
+                myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
+
+                pairInfo = "\t".join([str(elem.useMate.offset),
+                                       str(elem.useMate.mapQual), str(elem.useMate.aScore), str(elem.useMate.numN), str(elem.useMate.readLen),
+                                       str(elem.useMate.refName), str(elem.useMate.flag)])
+        
+                id_handle.write("\t".join([str(elem.juncRead.name), "anomaly", myInfo, pairInfo]) + "\n")
                 
             # print unmapped read ids
             for elem in junctions[j].unmappedReads:
-                id_handle.write("\t".join([str(elem.juncRead.name), ",".join([str(j), str(elem.juncRead.offset), str(elem.juncRead.flag)]), "-", "unmapped"]) + "\n")
+                myInfo = "\t".join([str(elem.juncRead.offset), str(elem.juncRead.mapQual), str(elem.juncRead.aScore),
+                                       str(elem.juncRead.numN), str(elem.juncRead.readLen), str(j), str(elem.juncRead.flag)])
+                pairInfo = "\t".join(["NA", "NA", "NA", "NA", "NA", "NA", "NA"])
+                id_handle.write("\t".join([str(elem.juncRead.name), "unmapped", myInfo, pairInfo]) + "\n")
             
     id_handle.close()
 
@@ -328,17 +380,13 @@ def parseSam(samFile, readType):
         if not line.startswith("@"): # ignore header lines
             try:
                 read = newReadObj(line.strip().split(), args.fastqIdStyle)
-
                 # only need to store info if the read actually aligned 
                 if read.aScore:
-                    
                     readBase = read.baseName  # part of the read that is the same between Rd1 and Rd2
-                    
                     # read1 that didn't map to genome, or ribo and then mapped to reg junctions or to all junctions and not to reg junction
                     # since in unaligned mode we report all reads, we want to only count the first time in the file we see it (output order is highest alignment score first)
                     if ((readType == "r1j" and readBase in nonRegIds and readBase not in juncReads) or
                         (readType == "r1rj" and readBase in regIds and readBase not in juncReads)):
-                        
                         curJuncReadObj = juncReadObj(read)  # create object for this read (mate info empty for now) to put in junction and juncReads dicts
                         juncReads[readBase] = curJuncReadObj  # will look up this obj later to populate mates
                             
@@ -346,10 +394,8 @@ def parseSam(samFile, readType):
                         if not read.refName in junctions:
                             curJuncObj = juncObj(read.refName)
                             junctions[read.refName] = curJuncObj
-                    
                         # initially just append all reads to unknownReads, we will later remove some and move to circularReads, decoyReads, or unmappedReads
                         junctions[read.refName].unknownReads.append(curJuncReadObj)
-                        
                     elif readBase in juncReads: # this is a mate so we only care about it if it's Rd1 was stored
                         if readType == "gMate" and not juncReads[readBase].mateGenomic:  # only if we haven't already found the primary genomic alignment
                             juncReads[readBase].mateGenomic = read
@@ -357,7 +403,6 @@ def parseSam(samFile, readType):
                             # this is a junction mate, need to check offset 
                             if (int(read.offset) >= (JUNC_MIDPOINT - int(read.readLen) + args.overhang + 1) and
                                 int(read.offset) <= (JUNC_MIDPOINT - args.overhang + 1)):
-                                
                                 # if it overlaps the junction, add it to the appropriate mate field
                                 if readType == "jMate" and not juncReads[readBase].mateJunction:  # only if we haven't already found the primary junction alignment
                                     juncReads[readBase].mateJunction = read
@@ -453,7 +498,7 @@ if __name__  == "__main__":
             
             if args.verbose:
                 print "ignoreIds (aligned to genome):", str(len(ignoreIds))
-                print "lienarIds:", str(len(regIds))
+                print "linearIds:", str(len(regIds))
                 print "scrambledIds:", str(len(nonRegIds))
                 
             juncReads = {}  # base read id: juncReadObj
@@ -530,7 +575,7 @@ if __name__  == "__main__":
                     
             
             reportCircularReads(globalCutOff)  # output reports
-            reportAllReadIds(globalCutOff)   # output ids used in the reports for further manual investigation if desired + GLM uses these category assignments
+            reportAllReadIds2(globalCutOff)   # output ids used in the reports for further manual investigation if desired + GLM uses these category assignments
             
         except Exception as e:
             print "Exception"

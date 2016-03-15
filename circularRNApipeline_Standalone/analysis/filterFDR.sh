@@ -99,8 +99,8 @@ then
     OPT_ARGS=`echo ${OPT_ARGS} -se`  
   fi
   
-  # add param for unaligned mode
-  if [[ $MODE = *unaligned* ]]
+  # add param for unaligned mode (search for unalign instead of unaligned to handle Standalone code where R2analysis_unalign indicates run in unaligned mode on pre-existing files)
+  if [[ $MODE = *unalign* ]]
   then
     OPT_ARGS=`echo ${OPT_ARGS} -u`
   fi
