@@ -1,6 +1,8 @@
 # KNIFE
 Known and Novel IsoForm Explorer. Statistically based splicing detection for circular and linear isoforms from RNA-Seq data.
 
+Note: as of release v1.3, circular and linear junctions are quantified based on both R1 and R2 junctional alignments. Prior versions considered only R1 junctional alignments. If both R1 and R2 aligned to the same junction as can be the case for small circles, that read is only counted once in the reported totals.
+
 Note: It has been brought to our attention that there was a discrepancy in the SRA annotations in the NCBI short read archive for the HeLa samples we analyzed for Figure 3 in our manuscript and their true identity. Please see misAnnotationUpdate.zip available in Downloads under release v1.2 for updated analysis.  
 
 # Overview
