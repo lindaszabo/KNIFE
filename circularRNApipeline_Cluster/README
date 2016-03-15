@@ -17,14 +17,16 @@ calling findCircularRNA***.sh 3 times, altering the “mode” parameter each ti
   1) The first run generates the annotation-dependent reports, alignment statistics,
      and creates the de novo index for this dataset using read 1 (R1) junction alignments only.
      
-     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode junction_id_suffix
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name
+     junction_overlap mode report_directory_name ntrim denovoCircMode junction_id_suffix
 
   2) For the second run, use all the same parameters from the first run but append
      the string "_unaligned" to the mode. This generates the de novo reports by aligning
      unaligned reads to the de novo index created for this dataset during the first run. 
      This step also uses R1 junction alignments only.
 
-     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_unaligned report_directory_name ntrim denovoCircMode junction_id_suffix
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name j
+     unction_overlap mode_unaligned report_directory_name ntrim denovoCircMode junction_id_suffix
 
   3) For the third run, use all the same parameters from the first run but append
      the string “_R2analysis” to the mode. This will re-run the annotation-dependent and de novo
@@ -33,7 +35,8 @@ calling findCircularRNA***.sh 3 times, altering the “mode” parameter each ti
      alignments. Consolidated reports counting alignments from both R1 and R2 will be output under
      alignment_parent_directory/dataset_name/report_directory_name/combinedReports.
 
-     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name junction_overlap mode_R2analysis report_directory_name ntrim denovoCircMode junction_id_suffix
+     sh findCircularRNA***.sh read_directory read_id_style alignment_parent_directory dataset_name
+     junction_overlap mode_R2analysis report_directory_name ntrim denovoCircMode junction_id_suffix
 
 See main project README file for parameter descriptions and default values. In addition
 to the possible values for the "mode" parameter described in the project README,

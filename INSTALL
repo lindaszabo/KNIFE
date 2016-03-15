@@ -1,32 +1,52 @@
-1. Download most recent version of code. You will only need 1 of these 3 directories
-and can delete the other 2 which you will no be using:
+1. Download most recent version of code. You will only need 1 of these 2 directories
+and can delete the other which you will not be using:
   
-  circularRNApipeline_SGE for Sun Grid Engine
-  circularRNApipeline_SLURM for SLURM
-  circularRNApipeline_StandAlone for running on a single machine. 
+  circularRNApipeline_Cluster for running on cluster using Sun Grid Engine or SLURM scheduler
+  circularRNApipeline_StandAlone for running on a single machine
 
-2. For SLURM or SGE versions, edit the following files to load appropriate modules at runtime: 
-   circularRNApipeline_*/analysis/depends_bam.sh needs to load samtools version 1.2+
-   circularRNApipeline_*/analysis/depends_bt2.sh needs to load Bowtie2 2.2.1+ (tested with 2.2.1)
-   circularRNApipeline_*/analysis/depends_python.sh needs to load python 2.7.5+ (tested with 2.7.5) with numpy and scipy libaries
-   circularRNApipeline_*/analysis/depends_r.sh needs to load R (tested with 3.0.2) which has data.table package installed
-   circularRNApipeline_*/denovo_scripts/depends_bt1.sh needs to load Bowtie1 (tested with 0.12.7)
-   if perl is not available by default, circularRNApipeline_*/denovo_scripts/denovo_scripts.batch needs to load perl
+Notes below referring to circularRNApipeline_*** are referring to either circularRNApipeline_Cluster 
+or circularRNApipeline_StandAlone, whichever you are using
+  
+2. make sure all R, python, and shell scripts are executable
+  
+3. Install the following software and add to $PATH
 
-   For the StandAlone version, the required software listed above must be available in $PATH at runtime
-   
-3. Install bowtie indexes:
+    Bowtie2 2.2.1+ (tested with 2.2.1)
+    Bowtie 0.12.7+ (tested with 0.12.7)
+    perl
+    python 2.7.3+ (tested with 2.7.5) and the numpy and scipy libraries
+    R 3.0.2+ (tested with 3.0.2) and the data.table package
+    samtools 1.2+ if you want alignment files output as bam instead of sam files
 
-Annotated junction indices are available for Human (hg19), Mouse (mm10), Rat (rn5) and Drosophila (dm3).
-We have also packaged up all of the the transcriptome, genome, and ribosomal index, fasta, and gtf files
-for each of these genomes named as required for use with our scripts. You will need to create an index directory
-under the top level circularRNApipeline directory and unpack the Bowtie2 tar (use: tar zxvf genomeId_BT2index.tar.gz)
-and the fastas tar (use: tar zxvf genomeId_fastas.tar.gz) into this index directory. You will need to create
-another index directory under circularRNApipeline/denovo_scripts and unpack the Bowtie1 tar
-(use: tar zxvf genomeId_BT1index.tar.gz) into this index directory. The gtf file must be downloaded
-and uncompressed (gunzip genomeId_genes.gtf.gz) into the circularRNApipeline/denovo_scripts directory.
-Files are available here: https://mega.nz/#F!RtsCHCQb!fyxYNWjoCef5Ie361vUxiA
+3b. (only if necessary)
+  
+  In some cases I have run into issues getting all of the software correctly in my $PATH when running
+  on a cluster without actively loading modules just before making a call to one of the programs.
+  I created 2 files that provide a workaround for this that you can modify if it is easier for you.
+  Example code is provided showing how I had to use it, if you modify to suit your needs it
+  will then be called in all the correct places in the code.
+  
+  circularRNApipeline_***/depends.sh can be used to load Bowtie2, python, R, and samtools into your path
+  
+  circularRNApipeline_***/denovo_scripts/depends.sh can be used to load perl, Bowtie, and Bowtie2 into your
+  path for creating the denovo index
+    
+4. Install bowtie indexes:
 
-4. Follow directions in testOutput/README to test installation.
+  a. create index directories circularRNApipeline_***/index and circularRNApipeline_***/denovo_scripts/index
+  
+  b. download available indexes
+
+  Annotated junction indices are available for Human (hg19), Mouse (mm10), Rat (rn5) and Drosophila (dm3).
+  We have also packaged up all of the the transcriptome, genome, and ribosomal index, fasta, and gtf files
+  for each of these genomes named as required for use with our scripts. You will need to unpack the Bowtie2 
+  tar (use: tar zxvf genomeId_BT2index.tar.gz) and the fastas tar (use: tar zxvf genomeId_fastas.tar.gz) 
+  into circularRNApipeline_*/index. You will need to unpack the Bowtie1 tar (use: tar zxvf genomeId_BT1index.tar.gz) 
+  into circularRNApipeline_*/denovo_scripts/index. The gtf file must be downloaded and uncompressed 
+  (gunzip genomeId_genes.gtf.gz) into the circularRNApipeline_*/denovo_scripts directory.
+  
+  Files are available here: https://mega.nz/#F!RtsCHCQb!fyxYNWjoCef5Ie361vUxiA
+
+5. Follow directions in testOutput/README to test installation.
 
    
