@@ -1,1 +1,0 @@
-module load python/2.7  # must be 2.7+, will not work with python 3

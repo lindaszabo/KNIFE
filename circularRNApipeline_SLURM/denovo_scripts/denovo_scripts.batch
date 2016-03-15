@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# params are: ALIGN_PARDIR, DATASET_NAME, MODE, NTRIM, DENOVOCIRC
-
-source ./depends_bt1.sh # load in bowtie1 to PATH
-source ../analysis/depends_bt2.sh # load in bowtie1 to PATH
-
-perl process_directory_unaligned.pl ${1} ${2} ${3} ${4} ${5}
-
