@@ -108,12 +108,14 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
     3. glmModels: RData files containing the model used to generate the glmReports 
     4.  ids: alignment and category assignment per read
     5.  combinedReports: aggregated read counts per junction considering cases where R1 or R2 aligned to the junction. If R1 and R2 both aligned to the same junction, they are only counted once. 
-    * circleJuncProbs.txt and linearJuncProbs.txt are the summaries of the GLM reports. 
+    
+    circleJuncProbs.txt and linearJuncProbs.txt are the summaries of the GLM reports. 
       - The first 3 columns contain values from glmReports from the original run
       - swapped_count: number of reads where R2 aligned to this junction and R1 was consistent with presumed splice event
       - swapped_posterior: posterior probability that the junction is a true junction based only on R2 junctional alignments
       - total_reads: number of reads where R1 or R2 aligned to this junction. This may not be the sum of orig_count and swapped_count because R1 and R2 may have aligned to the same junction and should not be double-counted
-    * naiveunaligned.txt is the summary of alignments to the denovo index. 
+    
+    naiveunaligned.txt is the summary of alignments to the denovo index. 
       - orig_circOrLinear: number of reads where read1 aligned to this junction and read2 was consistent with presumed splice 
       - orig_decoyOrAnom: number of reads where read2 was inconsistent with read1 alignment to this junction
       - orig_unmapped: number of reads where read1 aligned to this junction and read2 did not map to any index
