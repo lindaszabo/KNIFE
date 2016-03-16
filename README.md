@@ -97,16 +97,32 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
       - multimapped: N/A
       - circ: number of reads where read1 aligned to this circular junction and read2 was consistent with presumed splice event, or just number of aligned reads to this circular junction for SE reads
       - decoy: number of reads where read2 was inconsistent with read1 alignment to this circular junction
-      - pvalue: naive method p-value for this junction based on all aligned reads (higher = more likely true positive). You will want to select a threshold on the p-value for which of these junctions are considered true positive circles. For the 
+      - pvalue: naive method p-value for this junction based on all aligned reads (higher = more likely true positive). You will want to select a threshold on the p-value for which of these junctions are considered true positive circles. 
       - scores: (read1, read2) Bowtie2 alignment scores for each read aligning to this junction, or scores at each 10th percentile for junctions with more than 10 reads
     2. glmReports: read count and posterior probability per junction using GLM (only for PE reads, annotation-dependent junctions). 2 files created per sample, 1 with circular splice junctions and the other with linear splice junctions. You will want to select a threshold on the posterior probability for which of these junctions are considered true positive circles. For the publication, we considered all junctions with a posterior probability of 0.9 or higher.
       - junction: chr|gene1_symbol:splice_position|gene2_symbol:splice_position|junction_type|strand
         - junction types are reg (linear), rev (circle formed from 2 or more exons), or dup (circle formed from single exon)
       - numReads: number of reads where read1 aligned to this junction and read2 was consistent with presumed splice event
       - p_predicted: posterior probability that the junction is a true junction (higher = more likely true positive). 
-      - p_value: p-value for the posterior probability to control for the effect of total junctional counts on posterior probability
+      - p_value: p-value for the posterior probability to control for the effect of total junctional counts on posterior probability (linear reports only)
     3. glmModels: RData files containing the model used to generate the glmReports 
     4.  ids: alignment and category assignment per read
+    5.  combinedReports: aggregated read counts per junction considering cases where R1 or R2 aligned to the junction. If R1 and R2 both aligned to the same junction, they are only counted once. 
+    * circleJuncProbs.txt and linearJuncProbs.txt are the summaries of the GLM reports. 
+      - The first 3 columns contain values from glmReports from the original run
+      - swapped_count: number of reads where R2 aligned to this junction and R1 was consistent with presumed splice event
+      - swapped_posterior: posterior probability that the junction is a true junction based only on R2 junctional alignments
+      - total_reads: number of reads where R1 or R2 aligned to this junction. This may not be the sum of orig_count and swapped_count because R1 and R2 may have aligned to the same junction and should not be double-counted
+    * naiveunaligned.txt is the summary of alignments to the denovo index. 
+      - orig_circOrLinear: number of reads where read1 aligned to this junction and read2 was consistent with presumed splice 
+      - orig_decoyOrAnom: number of reads where read2 was inconsistent with read1 alignment to this junction
+      - orig_unmapped: number of reads where read1 aligned to this junction and read2 did not map to any index
+      - orig_pval: naive method p-value for this junction based on all R1s aligned to the junction (higher = more likely true positive).
+      - swapped_circOrLinear: number of reads where read2 aligned to this junction and read1 was consistent with presumed splice 
+      - swapped_decoyOrAnom: number of reads where read1 was inconsistent with read2 alignment to this junction
+      - swapped_unmapped: number of reads where read2 aligned to this junction and read1 did not map to any index
+      - swapped_pval: naive method p-value for this junction based on all R2s aligned to the junction
+      - total_reads: number of reads where R1 or R2 aligned to this junction. This may not be the sum of orig_circOrLinear and swapped_circOrLinear because R1 and R2 may have aligned to the same junction and should not be double-counted
 2. sampleStats: Contains 2 txt files with high-level alignment statistics per sample (read1 and read2 reported separately).
    * SampleAlignStats.txt: useful for evaluating how well the library prep worked, for example ribosomal depletion. Number of reads are reported, with fraction of total reads listed in ()  
      - READS: number of reads in original fastq file
