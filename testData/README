@@ -79,6 +79,13 @@ alignments (591803 + 1869618) in the sam file (2461421 alignment lines + 2 heade
     16846894 (87.25%) aligned 0 times
     591803 (3.07%) aligned exactly 1 time
     1869618 (9.68%) aligned >1 times
+    
+2. Why won't the script work on Ubuntu 14?
+
+This is related with how Ubuntu executes /bin/sh; it uses dash instead by default. Although I have not tested on Ubuntu 14,
+a user reported that they were able to solved this problem by either specifying bash ./findCircularRNA_***.sh
+or disabling dash: sudo dpkg-reconfigure dash
+ 
 
 
 
