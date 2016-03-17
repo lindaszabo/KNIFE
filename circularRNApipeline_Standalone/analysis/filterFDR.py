@@ -49,8 +49,10 @@ def selectCandidateIds():
                 for line in handle:
                     ignoreIds[line.strip().split()[0]] = None
             handle.close()
-        except:
-            print "error parsing ribo ids for", line
+        except Exception as e:
+            print "Exception"
+            print e
+            print "parsing ribo ids for", line
         
         # load genome aligned id file for the same sample and add to ignoreIds
         handle = open("".join(["/".join([idDir, "genome", args.sampleId]), "_genome_output.txt"]), "rU")
@@ -84,8 +86,10 @@ def selectCandidateIds():
                 if testId not in ignoreIds:
                     regIds[testId] = None
             handle.close()
-        except:
-            print "error parsing reg ids for", line
+        except Exception as e:
+            print "Exception"
+            print e
+            print "parsing reg ids for", line
     
     # load junction aligned id file (or de novo aligned id file) for same sample and load ids not in ignoreIds or regJuncIds
     try:
@@ -99,7 +103,9 @@ def selectCandidateIds():
             if testId not in ignoreIds and testId not in regIds:
                 nonRegIds[testId] = None   
         handle.close()
-    except:
+    except Exception as e:
+        print "Exception"
+        print e
         print "error parsing junction ids for", line 
     
     # print out these ids for later debugging use
@@ -108,6 +114,12 @@ def selectCandidateIds():
             out_handle = open("".join(["/".join([idDir, "denovoNonGR", args.sampleId]), "_output.txt"]), "wb")
         else:
             out_handle = open("".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"]), "wb")
+        
+        if args.verbose:
+            print "ready to write ids to", "".join(["/".join([idDir, "denovoNonGR", args.sampleId]), "_output.txt"]), "or", "".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"])
+            print "num nonRegIds:", str(len(nonRegIds))
+            print "num regIds:", str(len(regIds))
+            
         for i in nonRegIds:
             out_handle.write(i)
             out_handle.write("\n")
@@ -115,8 +127,10 @@ def selectCandidateIds():
             out_handle.write(i)
             out_handle.write("\n")
         out_handle.close()
-    except:
-        print "error writing ids for", i
+    except Exception as e:
+        print "Exception"
+        print e
+        print "writing ids for", i
 
       
 # Get mismatch rate for the decoys in this dataset. This is total_mismatches / total_bases
@@ -410,8 +424,10 @@ def parseSam(samFile, readType):
                                     juncReads[readBase].mateRegJunction = read
                                 elif readType == "dMate" and not juncReads[readBase].mateDenovoJunction:  # only if we haven't already found the primary denovo junction alignment
                                     juncReads[readBase].mateDenovoJunction = read
-            except:
-                print "error parsing sam output for", line
+            except Exception as e:
+                print "Exception"
+                print e
+                print "parsing sam output for", line
                 
     handle.close()
     
