@@ -63,12 +63,12 @@ class junction:
         if self.strand == 1:
             msg += ":" + str(self.exons[0].location.end)
         else:
-            msg += ":" + str(self.exons[0].location.start)
+            msg += ":" + str(self.exons[0].location.start + 1)
         msg += "|" + str(self.exons[1].qualifiers["gene_name"][0])
         if self.strand == 1:
-            msg += ":" + str(self.exons[1].location.start)
+            msg += ":" + str(self.exons[1].location.start + 1)
         else:
-            msg += ":" + str(self.exons[1].location.end)
+            msg += ":" + str(self.exons[1].location.end )
         msg += "|" + str(self.type)
         if self.strand == 1:
             msg += "|+"

@@ -16,8 +16,8 @@ import os
 import utils_os
 from utils_juncReads_minimal import *
 from scipy.stats import scoreatpercentile
-from scipy.stats import norm
-from math import sqrt
+from scipy.stats import poisson
+from math import ceil
 import sys
 
 JUNC_MIDPOINT = 150  
@@ -116,11 +116,6 @@ def selectCandidateIds():
         else:
             out_handle = open("".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"]), "wb")
         
-        if args.verbose:
-            print "ready to write ids to", "".join(["/".join([idDir, "denovoNonGR", args.sampleId]), "_output.txt"]), "or", "".join(["/".join([idDir, "juncNonGR", args.sampleId]), "_output.txt"])
-            print "num nonRegIds:", str(len(nonRegIds))
-            print "num regIds:", str(len(regIds))
-        
         for i in nonRegIds:
             out_handle.write(i)
             out_handle.write("\n")
@@ -157,17 +152,13 @@ def getDecoyMismatchRate():
 # param alignedReads: array of juncReadObj that aligned to the junction 
 def getPval(alignedReads):
     if len(alignedReads) > 0:
-        useMMrate = globalDecoyMMrate  
-        num_mm = sum([x.readStat for x in alignedReads]) / -6.0  # total number of mismatches observed for all reads aligning to this junction
+        useMMrate = globalDecoyMMrate
+        
+        # total number of mismatches observed for all reads aligning to this junction, rounded to get integer which is required for poisson.cdf
+        num_mm = int(ceil(sum([x.readStat for x in alignedReads]) / -6.0))  
         num_bases = sum([x.juncRead.readLen for x in alignedReads]) + sum([x.useMate.readLen for x in alignedReads if x.useMate != None])
-        p = useMMrate
-        q = 1 - useMMrate
-        expected_mm = p * num_bases
         
-        z = (num_mm - expected_mm) / sqrt(num_bases*p*q)
-        
-        return norm.cdf(-z)
-        
+        return 1 - poisson.cdf(num_mm, useMMrate*num_bases)
     else:
         return "-"
 
@@ -428,6 +419,7 @@ def parseSam(samFile, readType):
             except Exception as e:
                 print "Exception"
                 print e
+                print "error:", sys.exc_info()[0]
                 print "parsing sam output for", line
                 
     handle.close()
