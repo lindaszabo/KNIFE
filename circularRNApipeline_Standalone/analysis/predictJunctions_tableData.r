@@ -25,10 +25,10 @@ getOverlapForTrimmed <- function(x, juncMidpoint=150){
 addDerivedFields <- function(dt, useClass){
   if(nrow(dt) > 0){
     # calculate and add on cols for junction overlap, score adjusted for N penalties, 
-    dt[,`:=`(is.pos=useClass,overlap=apply(dt, 1, getOverlapForTrimmed), adjScore=aScore+numN)]  # syntax for multiple :=
+    dt[,`:=`(is.pos=useClass,overlap=apply(dt, 1, getOverlapForTrimmed))]  # syntax for multiple :=
     # and length-adjusted alignment score (laplace smoothing so alignment score of 0 treated different for different length reads)
-    dt[, lenAdjScore:=(as.numeric(adjScore) - 0.001)/as.numeric(readLen)]
-    dt[,`:=`(pos=NULL, aScore=NULL, numN=NULL, readLen=NULL, adjScore=NULL)]
+    dt[, lenAdjScore:=(as.numeric(aScore) - 0.001)/as.numeric(readLen)]
+    dt[,`:=`(pos=NULL, aScore=NULL, numN=NULL, readLen=NULL)]
   }
   
   return(dt)
