@@ -1,4 +1,4 @@
 @GUsing Poisson distribution with p=: 0.00394524959742
 @junction	linear	anomaly	unmapped	multimapped	circ	decoy	pvalue	scores
 chr1|-0-2-2_seqlength-60-PKN2:89150100|-0-2-2_seqlength-60-PKN2:89150150|rev|+	0	0	0	0	0	1	-	
-chr14|-0-2-2_seqlength-60-PARP2:20811350|-0-2-2_seqlength-60-PARP2:20811400|rev|+	0	0	0	0	1	17	0.745396513019	(0, 0),
+chr14|-0-2-2_seqlength-60-PARP2:20811350|-0-2-2_seqlength-60-PARP2:20811400|rev|+	0	0	0	0	1	17	0.352073137632	(0, 0),
