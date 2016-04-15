@@ -12,7 +12,7 @@ differences in software versions but the results should be close.
 The log file provided shows output from running the Standalone code. Similar logs are expected 
 from the running the code on a Cluster, but will be output into several files under OUTPUT_DIRECTORY/logs
 
-findCircularRNA***.sh below refers to findCircularRNA***.sh, findCircularRNA_SLURM.sh or findCircularRNA_SGE.sh depending on how you are running the code
+findCircularRNA***.sh below refers to findCircularRNA.sh, findCircularRNA_SLURM.sh or findCircularRNA_SGE.sh depending on how you are running the code
 
 1. cd into directory containing findCircularRNA***.sh 
 
