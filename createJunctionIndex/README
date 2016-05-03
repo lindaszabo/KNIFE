@@ -30,7 +30,9 @@ and run the circular RNA analysis pipeline.
 1. fasta file containing the sequences of the genome
 2. fasta file containing the sequences of the transcriptome
 3. fasta file containing the ribosomal RNA sequences (can be split into subunits or just a single sequence)
-4. a gtf file for the species
+4. a gtf file for the species. Junctions are reported based on the "gene_name" field. This is present in most gtf formats,
+   but if the gtf for your species labels the field containing the gene name something else, you will need to update the 
+   gtf to change the label the field to "gene_name" before creating junction indices.
 5. either find or create a bowtie2 genome index that was created with the same genome build you are using for 1-4
 6. either find or create a bowtie genome index. This is bowtie 1, not bowtie2, and is used in the denovo pipeline
 7. either find or create a bowtie2 transcriptome index that was created with the same gtf and genome build you are using
