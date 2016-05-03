@@ -61,12 +61,12 @@ def parseChrFeatures(chrSeqRecord):
 
         # gene names are tied to the subrecords, and chromosome to SeqRecords, so need to track this info with the feature object 
         if sftr:
-            geneExons[sftr.qualifiers["gene_id"][0]] = gene(chrSeqRecord.id, ftr)
+            geneExons[sftr.qualifiers["gene_name"][0]] = gene(chrSeqRecord.id, ftr)
         else:
             # this is a single exon gene so gene name is in the feature instead of subfeatures
             if args.verbose:
-                print "single exon gene " + str(ftr.qualifiers["gene_id"][0])
-            geneExons[ftr.qualifiers["gene_id"][0]] = gene(chrSeqRecord.id, ftr)
+                print "single exon gene " + str(ftr.qualifiers["gene_name"][0])
+            geneExons[ftr.qualifiers["gene_name"][0]] = gene(chrSeqRecord.id, ftr)
             # and need to add the feature to the appropriate exonDict
             if ftr.strand == 1:
                 exonsPos[(int(ftr.location.start), int(ftr.location.end))] = ftr
