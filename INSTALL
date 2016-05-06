@@ -2,10 +2,10 @@
 and can delete the other which you will not be using:
   
   circularRNApipeline_Cluster for running on cluster using Sun Grid Engine or SLURM scheduler
-  circularRNApipeline_StandAlone for running on a single machine
+  circularRNApipeline_Standalone for running on a single machine
 
 Notes below referring to circularRNApipeline_*** are referring to either circularRNApipeline_Cluster 
-or circularRNApipeline_StandAlone, whichever you are using
+or circularRNApipeline_Standalone, whichever you are using
   
 2. make sure all R, python, and shell scripts are executable
   
