@@ -12,7 +12,7 @@ FASTA=$8 # name of fasta file under index to use
 
 OUTFILE_BASE=${ALIGN_PARDIR}/${DATASET_NAME}/orig/${ALIGN_OUTDIR}/${SAMPLE_ID}_${ALIGN_OUTDIR}_output
 
-NFLAGS="--no-sq --score-min L,0,-0.24 --rdg 50,50 --rfg 50,50 --no-unal" # flags common to all alignments
+NFLAGS="--threads 4 --no-sq --score-min L,0,-0.24 --rdg 50,50 --rfg 50,50 --no-unal" # flags common to all alignments
 
 if [ "$ALIGN_OUTDIR" = "junction" -o "$ALIGN_OUTDIR" = "reg" -o "$ALIGN_OUTDIR" = "denovo" ]
 then

@@ -43,8 +43,6 @@ if __name__  == "__main__":
         addAlignedIds("".join(["/".join([args.alignmentDir, "junction", args.fileBaseName]), "_junction_output.sam"]))
         addAlignedIds("".join(["/".join([args.alignmentDir, "reg", args.fileBaseName]), "_reg_output.sam"]))
         addAlignedIds("".join(["/".join([args.alignmentDir, "ribo", args.fileBaseName]), "_ribo_output.sam"]))
-        addAlignedIds("".join(["/".join([args.alignmentDir, "transcriptome", args.fileBaseName]), "_transcriptome_output.sam"]))
-        
         
         # get each id from fastq file, add it to a dict if not in the aligned dict
         parser = ParseFastQ(args.readFile)

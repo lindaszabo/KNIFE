@@ -7,7 +7,7 @@
 # These memory / time requests work for our cluster, you may need to edit them to meet
 # restrictions implemented on your cluster.
 # The main steps are:
-#  1) align to fastq files to genome, transcriptome, linear junction, circular junction, and ribosomal indices using Bowtie2 
+#  1) align to fastq files to genome, linear junction, circular junction, and ribosomal indices using Bowtie2 
 #  2) parse sam files and analyze alignments using "naive" statistical method
 #  3) run GLM to report posterior probability and p-value per junction
 #  4) generate alignment statistics per sample (useful for evaluating efficiency of ribo depletion, global circular:linear ratio, etc)
@@ -76,32 +76,30 @@ fi
 # change resource allocations based on job size
 if [[ "$MODE" = *large* ]]
 then
-  JUNC_VMEM="35G"
-  GENOME_VMEM="35G"
-  TRANSC_VMEM="35G"
-  REG_VMEM="35G"
-  RIBO_VMEM="25G"
+  JUNC_VMEM="80G"
+  GENOME_VMEM="80G"
+  REG_VMEM="80G"
+  RIBO_VMEM="80G"
   ALIGN_MAX_RT="23:0:0"
-  PREPROCESS_VMEM="45G"
-  FILTER_VMEM="59G"
+  PREPROCESS_VMEM="80G"
+  FILTER_VMEM="80G"
   PREPROCESS_MAX_RT="23:0:0"
   FILTER_MAX_RT="23:0:0"
-  PFA_VMEM="40G"
-  QUALITY_VMEM="44G"
+  PFA_VMEM="80G"
+  QUALITY_VMEM="80G"
   QUALITY_MAX_RT="48:0:0"
 else
   JUNC_VMEM="20G"
   GENOME_VMEM="6G"
-  TRANSC_VMEM="6G"
   REG_VMEM="20G"
-  RIBO_VMEM="50G"
+  RIBO_VMEM="5G"
   ALIGN_MAX_RT="12:0:0"
   PREPROCESS_VMEM="15G"
-  FILTER_VMEM="15G"
+  FILTER_VMEM="30G"
   PREPROCESS_MAX_RT="4:0:0"
   FILTER_MAX_RT="12:0:0"
-  PFA_VMEM="40G"
-  QUALITY_VMEM="44G"
+  PFA_VMEM="30G"
+  QUALITY_VMEM="20G"
   QUALITY_MAX_RT="48:0:0"
 fi
 
@@ -171,9 +169,8 @@ then
     qsub -t 1-${NUM_FILES}:1 -N GenomeAlign${DATASET_NAME} -l h_vmem=${GENOME_VMEM} -l h_rt=${ALIGN_MAX_RT} -wd ${CODE_DIR}/index -o ${LOG_DIR}/align/ -e ${LOG_DIR}/align/ analysis/align.sh SGE $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_genome genome ${bt_prefix}_genome.fa
     qsub -t 1-${NUM_FILES}:1 -N JunctionAlign${DATASET_NAME} -l h_vmem=${JUNC_VMEM} -l h_rt=${ALIGN_MAX_RT} -wd ${CODE_DIR}/index -o ${LOG_DIR}/align/ -e ${LOG_DIR}/align/ analysis/align.sh SGE $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_junctions_scrambled junction ${bt_prefix}_junctions_scrambled.fa
     qsub -t 1-${NUM_FILES}:1 -N RiboAlign${DATASET_NAME} -l h_vmem=${RIBO_VMEM} -l h_rt=${ALIGN_MAX_RT} -wd ${CODE_DIR}/index -o ${LOG_DIR}/align/ -e ${LOG_DIR}/align/ analysis/align.sh SGE $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_ribosomal ribo ${bt_prefix}_ribosomal.fa
-    qsub -t 1-${NUM_FILES}:1 -N TranscAlign${DATASET_NAME} -l h_vmem=${TRANSC_VMEM} -l h_rt=${ALIGN_MAX_RT} -wd ${CODE_DIR}/index -o ${LOG_DIR}/align/ -e ${LOG_DIR}/align/ analysis/align.sh SGE $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_transcriptome transcriptome ${bt_prefix}_transcriptome.fa
     qsub -t 1-${NUM_FILES}:1 -N RegAlign${DATASET_NAME} -l h_vmem=${REG_VMEM} -l h_rt=${ALIGN_MAX_RT} -wd ${CODE_DIR}/index -o ${LOG_DIR}/align/ -e ${LOG_DIR}/align/ analysis/align.sh SGE $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_junctions_reg reg ${bt_prefix}_junctions_reg.fa
-    depend_str="-hold_jid_ad "GenomeAlign${DATASET_NAME},JunctionAlign${DATASET_NAME},RiboAlign${DATASET_NAME},TranscAlign${DATASET_NAME},RegAlign${DATASET_NAME}
+    depend_str="-hold_jid_ad "GenomeAlign${DATASET_NAME},JunctionAlign${DATASET_NAME},RiboAlign${DATASET_NAME},RegAlign${DATASET_NAME}
   fi
 fi
 

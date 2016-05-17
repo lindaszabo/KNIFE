@@ -7,7 +7,7 @@
 # These memory / time requests work for our cluster, you may need to edit them to meet
 # restrictions implemented on your cluster.
 # The main steps are:
-#  1) align to fastq files to genome, transcriptome, linear junction, circular junction, and ribosomal indices using Bowtie2 
+#  1) align to fastq files to genome, linear junction, circular junction, and ribosomal indices using Bowtie2 
 #  2) parse sam files and analyze alignments using "naive" statistical method
 #  3) run GLM to report posterior probability and p-value per junction
 #  4) generate alignment statistics per sample (useful for evaluating efficiency of ribo depletion, global circular:linear ratio, etc)
@@ -78,7 +78,6 @@ if [[ "$MODE" = *large* ]]
 then
   JUNC_VMEM="35000"
   GENOME_VMEM="35000"
-  TRANSC_VMEM="35000"
   REG_VMEM="35000"
   RIBO_VMEM="25000"
   ALIGN_MAX_RT="23:0:0"
@@ -91,7 +90,6 @@ elif [[ "$MODE" = *bigmem* ]]
 then
   JUNC_VMEM="35000"
   GENOME_VMEM="35000"
-  TRANSC_VMEM="35000"
   REG_VMEM="35000"
   RIBO_VMEM="25000"
   ALIGN_MAX_RT="23:0:0"
@@ -103,7 +101,6 @@ then
 else
   JUNC_VMEM="20000"
   GENOME_VMEM="6000"
-  TRANSC_VMEM="6000"
   REG_VMEM="20000"
   RIBO_VMEM="5000"
   ALIGN_MAX_RT="12:0:00"
@@ -205,6 +202,18 @@ then
   elif [[ $MODE = *rosetta* ]]
   then
     bt_prefix="salpingoeca_rosetta_1"
+  elif [[ $MODE = *gorilla* ]]
+  then
+    bt_prefix="gorilla"
+  elif [[ $MODE = *bush* ]]
+  then
+    bt_prefix="bushbaby"
+  elif [[ $MODE = *orangutan* ]]
+  then
+    bt_prefix="orangutan"
+  elif [[ $MODE = *chimp* ]]
+  then
+    bt_prefix="chimp"
   else
     bt_prefix="hg19"
   fi
@@ -234,9 +243,8 @@ then
     g_id=`sbatch -J GenomeAlign${DATASET_NAME} ${RESOURCE_FLAG} --array=1-${NUM_FILES} --time=${ALIGN_MAX_RT} --mem=${GENOME_VMEM} -D ${CODE_DIR}/index -o ${LOG_DIR}/align/${DATASET_NAME}AlignGenome_%A_%a.out -e ${LOG_DIR}/align/${DATASET_NAME}AlignGenome_%A_%a.err analysis/align.sh SLURM $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_genome genome ${bt_prefix}_genome.fa | awk '{print $4}'`
     j_id=`sbatch -J JunctionAlign${DATASET_NAME} ${JUNCTION_RESOURCE_FLAG} --array=1-${NUM_FILES} --time=${JUNCTION_ALIGN_MAX_RT} --mem=${JUNC_VMEM} -D ${CODE_DIR}/index -o ${LOG_DIR}/align/${DATASET_NAME}AlignJunction_%A_%a.out -e ${LOG_DIR}/align/${DATASET_NAME}AlignJunction_%A_%a.err analysis/align.sh SLURM $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_junctions_scrambled junction ${bt_prefix}_junctions_scrambled.fa | awk '{print $4}'`
     r_id=`sbatch -J RiboAlign${DATASET_NAME} ${RESOURCE_FLAG} --array=1-${NUM_FILES} --time=${ALIGN_MAX_RT} --mem=${RIBO_VMEM} -D ${CODE_DIR}/index -o ${LOG_DIR}/align/${DATASET_NAME}AlignRibo_%A_%a.out -e ${LOG_DIR}/align/${DATASET_NAME}AlignRibo_%A_%a.err analysis/align.sh SLURM $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_ribosomal ribo ${bt_prefix}_ribosomal.fa | awk '{print $4}'`
-    t_id=`sbatch -J TranscAlign${DATASET_NAME} ${RESOURCE_FLAG} --array=1-${NUM_FILES} --time=${ALIGN_MAX_RT} --mem=${TRANSC_VMEM} -D ${CODE_DIR}/index -o ${LOG_DIR}/align/${DATASET_NAME}AlignTranscriptome_%A_%a.out -e ${LOG_DIR}/align/${DATASET_NAME}AlignTranscriptome_%A_%a.err analysis/align.sh SLURM $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_transcriptome transcriptome ${bt_prefix}_transcriptome.fa | awk '{print $4}'`
     reg_id=`sbatch -J RegAlign${DATASET_NAME} ${JUNCTION_RESOURCE_FLAG} --array=1-${NUM_FILES} --time=${JUNCTION_ALIGN_MAX_RT} --mem=${REG_VMEM} -D ${CODE_DIR}/index -o ${LOG_DIR}/align/${DATASET_NAME}AlignReg_%A_%a.out -e ${LOG_DIR}/align/${DATASET_NAME}AlignReg_%A_%a.err analysis/align.sh SLURM $TASK_DATA_FILE $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_junctions_reg reg ${bt_prefix}_junctions_reg.fa | awk '{print $4}'`  
-    depend_str="--depend=afterok:${g_id}:${j_id}:${r_id}:${t_id}:${reg_id}"
+    depend_str="--depend=afterok:${g_id}:${j_id}:${r_id}:${reg_id}"
   fi
 fi
 

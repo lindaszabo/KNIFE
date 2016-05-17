@@ -29,7 +29,6 @@ if __name__  == "__main__":
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "denovo"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "still_unaligned"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "genome"]))
-            utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "transcriptome"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "junction"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ribo"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "reg"]))
@@ -39,7 +38,6 @@ if __name__  == "__main__":
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "junction"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "ribo"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "reg"]))
-            utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "transcriptome"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "juncNonGR"]))
             utils_os.createDirectory("/".join([args.alignmentParDir, swappedDataSet, "orig", "ids", "denovoNonGR"]))
         
@@ -54,7 +52,7 @@ if __name__  == "__main__":
             
         ### mv the sam files, renaming them in the process
         for subdir in next(os.walk(fromSamDir))[1]:  # just get the top level subdirectories
-            if subdir in ["genome", "junction", "reg", "ribo", "transcriptome", "denovo"]:  # if it is one of the alignment output directories
+            if subdir in ["genome", "junction", "reg", "ribo", "denovo"]:  # if it is one of the alignment output directories
                 for f in os.listdir("/".join([fromSamDir, subdir])):
                     newf = f  # avoid exceptions if a file in the directory doesn't contain a read identifier
                     if "_R1" in f:

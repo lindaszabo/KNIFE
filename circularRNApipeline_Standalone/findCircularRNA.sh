@@ -153,8 +153,7 @@ then
     else
       ../analysis/align.sh $READ_FILE $SAMPLE_ID $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_genome genome ${bt_prefix}_genome.fa &
       ../analysis/align.sh $READ_FILE $SAMPLE_ID $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_ribosomal ribo ${bt_prefix}_ribosomal.fa &
-      ../analysis/align.sh $READ_FILE $SAMPLE_ID $ALIGN_PARDIR $DATASET_NAME $MODE ${bt_prefix}_transcriptome transcriptome ${bt_prefix}_transcriptome.fa &
-      echo "Launched 3 align.sh's into the background "`date`
+      echo "Launched 2 align.sh's into the background "`date`
     fi
     run_count=`ps -ealf | grep align.sh | grep ${USER} | grep ${DATASET_NAME} | grep -v grep | wc -l`
     while [ "$run_count" -gt 3 ]

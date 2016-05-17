@@ -32,7 +32,6 @@ if __name__  == "__main__":
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "denovo"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "still_unaligned"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "genome"]))
-        utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "transcriptome"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "junction"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ribo"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "reg"]))
@@ -42,7 +41,6 @@ if __name__  == "__main__":
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "junction"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "ribo"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "reg"]))
-        utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "transcriptome"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "juncNonGR"]))
         utils_os.createDirectory("/".join([args.alignmentParDir, args.dataSet, "orig", "ids", "denovoNonGR"]))
         #### open file for output ####
