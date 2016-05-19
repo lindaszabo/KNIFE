@@ -169,6 +169,8 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   4. denovo_script_out: debugging output generated during creation of de novo index.
   5. sampleStats: logs from generating sample statistics files
 
+If you have generated the combinedReports directory above (this occurs automatically in the circularRNApipeline_Standalone code and requires an additional call in the circularRNApipeline_Cluster code - see circularRNApipeline_Cluster README for details), an additional output directory is created as [alignment_parent_directory]/[dataset_name]Swapped. The output under the "circReads" subdirectories here contains equivalent information as described above for read1, but generated from treating R2 as R1. The output detailed above for the "orig" subdirectories and "sampleStats" is not present because Bowtie2 sam outputs from the initial run are re-used for this step.
+
 # Selecting High Quality Circular/Linear Junctions
 True circular and linear junctions are a subset of the reported junctions. All identified junctions are reported along with a posterior probability (GLM reports) or p-value (naive reports) which is used to flag false positives. Instead of selecting a threshold on read counts as you would for other circular RNA algorithms, you will select a threshold on these statistical scores and filter the reports. For the publication, we generally considered junctions with a score of 0.9 or higher to be true positive circular RNA (see publication for details). You can filter the results on read count as well if you want to limit your analysis to highly expressed RNA.
 
