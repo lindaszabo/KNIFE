@@ -71,7 +71,7 @@ parameters
 
 -o: directory to output the database files
 
-COMMAND 2: creates the junction indices. This can only be run after step 1 is complete.
+COMMAND 2: creates the junction indices. This can only be run after COMMAND 1 is complete.
 
 sh createJunctionIndex.sh path_to_circularRNApipeline path_to_output_directory INDEX_FILE_ID window_size
 
@@ -79,7 +79,7 @@ parameters
 
 path_to_circularRNApipeline: path to the pipeline directory, index files created will be placed in the index subdirectory
 
-path_to_output_directory: the same outputDirectory used in step 1 to create the exonDB
+path_to_output_directory: the same outputDirectory used in COMMAND 1 to create the exonDB
 
 INDEX_FILE_ID: string selected above that will be included in all of the fasta file names and bowtie index file names
 
