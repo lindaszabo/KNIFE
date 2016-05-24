@@ -55,16 +55,28 @@ class junction:
         
         return EMPTY_SEQUENCE
     
+    # tries getting primary gene name, if that doesn't exist tries getting secondary gene name.
+    # if neither primary or secondary gene name fields exist, an exception will be thrown
+    # which is caught and handled in the calling function
+    def getGeneName(self, use_feature, use_n1, use_n2):
+        if use_n1 in use_feature.qualifiers:
+            use_name = use_n1
+        else: 
+            use_name = use_n2
+            
+        return use_feature.qualifiers[use_name][0]
+    
     # the SeqRecord features switch the start and end apparently for genes on the minus strand
     # So I need to switch them back since I want to print the coordinates of the junction
-    def printHeader(self):
+    # n1 is primary name field to use, n2 is backup name field to use 
+    def printHeader(self, n1, n2):
         msg = ">" + str(self.chr)
-        msg += "|" + str(self.exons[0].qualifiers["gene_name"][0])
+        msg += "|" + str(self.getGeneName(self.exons[0], n1, n2))
         if self.strand == 1:
             msg += ":" + str(self.exons[0].location.end)
         else:
             msg += ":" + str(self.exons[0].location.start + 1)
-        msg += "|" + str(self.exons[1].qualifiers["gene_name"][0])
+        msg += "|" + str(self.getGeneName(self.exons[1], n1, n2))
         if self.strand == 1:
             msg += ":" + str(self.exons[1].location.start + 1)
         else:

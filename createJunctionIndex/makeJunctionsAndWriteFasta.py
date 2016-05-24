@@ -29,6 +29,7 @@ import cPickle as pickle
 import os
 import utils_os
 import re
+import sys
 from utils_junction import junction
 
 EMPTY_SEQUENCE = "NOSEQUENCE" # to indicate junction sequence contains all Ns so do not include in fasta output
@@ -54,21 +55,27 @@ patt_exonfile = re.compile("exonsByStrand_.+\.pkl")
 def writeAllPairs(curSeqRec, id, allExons, curExons, junctions, handle):
     allPairs = product(curExons, repeat=2)  # create all exon pairs including x-x, x-y, y-x
     for a,b in allPairs:
-        exonA = allExons[a] 
-        exonB = allExons[b]
-        if exonA.strand == 1:
-            curJuncId = (exonA.location.end, exonB.location.start)
-        else:
-            curJuncId = (exonA.location.start, exonB.location.end)
-        
-        # if this junction is not already accounted for, write it to the file
-        if not curJuncId in junctions:
-            curJunc = junction(curSeqRec, id, exonA, exonB)
-            junctions[curJuncId] = None  # don't need to store anything in the dictionary, just need the keys hashed
-            if str(curJunc) != EMPTY_SEQUENCE:
-                handle.write(str(curJunc.printHeader()))  # junction fasta header
-                handle.write(str(curJunc))  # prints out the sequence
-    
+        try:
+            exonA = allExons[a] 
+            exonB = allExons[b]
+            if exonA.strand == 1:
+                curJuncId = (exonA.location.end, exonB.location.start)
+            else:
+                curJuncId = (exonA.location.start, exonB.location.end)
+            
+            # if this junction is not already accounted for, write it to the file
+            if not curJuncId in junctions:
+                curJunc = junction(curSeqRec, id, exonA, exonB)
+                junctions[curJuncId] = None  # don't need to store anything in the dictionary, just need the keys hashed
+                if str(curJunc) != EMPTY_SEQUENCE:
+                    handle.write(str(curJunc.printHeader(args.name1, args.name2)))  # junction fasta header
+                    handle.write(str(curJunc))  # prints out the sequence
+        except Exception as e:
+            print "Exception"
+            print e
+            print "error:", sys.exc_info()[0]
+            print "parsing features for", a, b
+            
     return junctions
 
 # Move along the sliding window, get all exons within the window, write out all of those
@@ -154,11 +161,13 @@ def createJunctions(fileId, exonFile):
 if __name__  == "__main__":
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('-w', '--window', help='sliding window size to create junctions', default=100000, type=int)
+    parser.add_argument('-w', '--window', help='sliding window size to create junctions', default=1000000, type=int)
     parser.add_argument('-e', '--exonDir', help='directory containing exon pickle files', default='output/exons')
     parser.add_argument('-s', '--singleFile', help='path to single exon file that should be parsed for junctions')
     parser.add_argument('-r', '--recordDir', help='directory containing seq record pickle files', default='output/records')
     parser.add_argument('-f', '--fastaDir', help='directory to output junction fasta files, will be created if does not exist', default='output/fasta')
+    parser.add_argument('-n1', '--name1', help='name of field in gtf to use for gene names', default='gene_name')
+    parser.add_argument('-n2', '--name2', help='name of field in gtf to use for gene names if n1 does not exist', default='gene_id')
     parser.add_argument('-v', '--verbose', help='print extra debugging info', action='store_true')
     args = parser.parse_args()
 

@@ -24,6 +24,7 @@ from Bio import SeqIO
 from BCBio import GFF
 import cPickle as pickle
 import utils_os
+import sys
 
 # not currently using genes, but figured it may be useful to have these objects
 # around for future analysis if necessary. Each gene contains a chromosome id
@@ -40,6 +41,17 @@ class gene:
         msg += " feature: " + str(self.feature)
         return msg
 
+# tries getting primary gene name, if that doesn't exist tries getting secondary gene name.
+# if neither primary or secondary gene name fields exist, an exception will be thrown
+# which is caught and handled in the calling function
+def getGeneName(use_feature):
+    if args.name1 in use_feature.qualifiers:
+        use_name = args.name1
+    else: 
+        use_name = args.name2
+        
+    return use_feature.qualifiers[use_name][0]
+    
 # the workhorse function.
 # param chrSeqRecord: a SeqRecord for 1 chromosome
 def parseChrFeatures(chrSeqRecord):
@@ -50,28 +62,35 @@ def parseChrFeatures(chrSeqRecord):
     
     
     for ftr in chrSeqRecord.features: # this is 1 entire gene
-        sftr = None # genes with a single exon are at the top level ftr
-        for sftr in ftr.sub_features:
-            # add exon to the exon dict for the current chr
-            # keeping in separate dicts for now so we are only looking at 1 direction with 100kb
-            if sftr.strand == 1:
-                exonsPos[(int(sftr.location.start), int(sftr.location.end))] = sftr
+        try:
+            sftr = None # genes with a single exon are at the top level ftr
+            for sftr in ftr.sub_features:
+                # add exon to the exon dict for the current chr
+                # keeping in separate dicts for now so we are only looking at 1 direction with 100kb
+                if sftr.strand == 1:
+                    exonsPos[(int(sftr.location.start), int(sftr.location.end))] = sftr
+                else:
+                    exonsNeg[(int(sftr.location.start), int(sftr.location.end))] = sftr
+    
+            # gene names are tied to the subrecords, and chromosome to SeqRecords, so need to track this info with the feature object 
+            if sftr:
+                geneExons[getGeneName(sftr)] = gene(chrSeqRecord.id, ftr)
             else:
-                exonsNeg[(int(sftr.location.start), int(sftr.location.end))] = sftr
-
-        # gene names are tied to the subrecords, and chromosome to SeqRecords, so need to track this info with the feature object 
-        if sftr:
-            geneExons[sftr.qualifiers["gene_name"][0]] = gene(chrSeqRecord.id, ftr)
-        else:
-            # this is a single exon gene so gene name is in the feature instead of subfeatures
-            if args.verbose:
-                print "single exon gene " + str(ftr.qualifiers["gene_name"][0])
-            geneExons[ftr.qualifiers["gene_name"][0]] = gene(chrSeqRecord.id, ftr)
-            # and need to add the feature to the appropriate exonDict
-            if ftr.strand == 1:
-                exonsPos[(int(ftr.location.start), int(ftr.location.end))] = ftr
-            else:
-                exonsNeg[(int(ftr.location.start), int(ftr.location.end))] = ftr
+                # this is a single exon gene so gene name is in the feature instead of subfeatures
+                if args.verbose:
+                    print "single exon gene " + str(getGeneName(ftr))
+                geneExons[getGeneName(ftr)] = gene(chrSeqRecord.id, ftr)
+                # and need to add the feature to the appropriate exonDict
+                if ftr.strand == 1:
+                    exonsPos[(int(ftr.location.start), int(ftr.location.end))] = ftr
+                else:
+                    exonsNeg[(int(ftr.location.start), int(ftr.location.end))] = ftr
+        except Exception as e:
+            print "Exception"
+            print e
+            print "error:", sys.exc_info()[0]
+            print "parsing features for", ftr
+            
     
     if len(exonsPos) > 0:
         chrExonsByDirection.append((chrSeqRecord.id, 1, exonsPos))  # chrSeqRecord.id is chr1 for example, 1 indicates pos strand
@@ -106,6 +125,8 @@ if __name__  == "__main__":
     parser.add_argument('-f', '--fastaFile', required=True, help='path to fasta file with chromosome sequences')
     parser.add_argument('-a', '--annotationFile', required=True, help='path to gff file with exon annotations')
     parser.add_argument('-o', '--outDir', help='directory to output files, will be created if it does not exist', default='output')
+    parser.add_argument('-n1', '--name1', help='name of field in gtf to use for gene names', default='gene_name')
+    parser.add_argument('-n2', '--name2', help='name of field in gtf to use for gene names if n1 does not exist', default='gene_id')
     parser.add_argument('-e', '--exonOutDir', help='directory to output exon pickle files, will be created within outDir if it does not exist', default='exons')
     parser.add_argument('-g', '--geneOutDir', help='directory to output gene pickle files, will be created within outDir if it does not exist', default='genes')
     parser.add_argument('-r', '--recOutDir', help='directory to output seq record pickle files, will be created within outDir if it does not exist', default='records')
@@ -137,7 +158,9 @@ if __name__  == "__main__":
         print "data we are searching for in gff: " + str(limit_info)
     
     ########### read in the annotations, adding annotations to the sequences 
-    a_handle = open(args.annotationFile)
+    a_handle = open(args.annotationFile, "rU")
+    if args.verbose:
+            print "opening annotation file", args.annotationFile
     for rec in GFF.parse(a_handle, base_dict=f_dict, limit_info=limit_info): # each rec is a SeqRecord (for 1 chromosome)
         if args.verbose:
             print "####### starting new chromosome: " + str(rec.id)
