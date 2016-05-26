@@ -131,8 +131,6 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
      - UNMAPPED: number of reads that did not align to any of the junction, genome, transcriptome, or ribosomal indices
      - GENOME: number of reads aligning to the genome
      - G_STRAND: percentage of GENOME reads aligning to forward strand and percentage aligning to reverse strand
-     - TRANSCRIPTOME: number of reads aligning to the transcriptome 
-     - T_STRAND: percentage of TRANSCRIPTOME reads aligning to forward strand and percentage aligning to reverse strand
      - JUNC: number of reads aligning to the scrambled or linear junction index and overlapping the junction by required amount
      - J_STRAND: percentage of JUNC reads aligning to forward strand and percentage aligning to reverse strand
      - RIBO: number of reads aligning to the ribosomal index
@@ -156,12 +154,11 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
   2. junction: sam/bam files containing Bowtie2 alignments to the scrambled junction index
   3. reg: sam/bam files containing Bowtie2 alignments to the linear junction index
   4. ribo: sam/bam files containing Bowtie2 alignments to the ribosomal index
-  5. transcriptome: sam/bam files containing Bowtie2 alignments to the transcriptome index
-  6. unaligned: fastq and fasta files for all reads that did not align to any index
+  5. unaligned: fastq and fasta files for all reads that did not align to any index
     1. forDenovoIndex: fastq files containing subset of the unaligned reads that are long enough to be used for creating the denovo junction index
-  7. denovo: sam/bam files containing Bowtie2 alignments to the de novo junction index
-  8. still_unaligned: fastq files containing the subset of the unaligned reads that did not align to the denovo index either 
-  9. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
+  6. denovo: sam/bam files containing Bowtie2 alignments to the de novo junction index
+  7. still_unaligned: fastq files containing the subset of the unaligned reads that did not align to the denovo index either 
+  8. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
 4. logs (Cluster version only, for Standalone stderr and stdout need to be redirected to log file)
   1. align: logs from all bowtie2 alignment calls
   2. analysis: logs from processing the Bowtie2 output to generate the naive-method and glm reports
