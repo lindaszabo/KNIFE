@@ -12,6 +12,10 @@ parameter 7, you still need to call the script with the default value for
 argument 6 specified.
 
 ** see README on main project page for details on each of these parameters
+In addition to the values for the parameter "mode" documented in the main project README,
+you can append "skipDenovo" to the mode string if you only want annotated junctions reported
+and "skipR2" if you only want junctions reported based on R1 junctional alignments (as in the
+initial KNIFE publication) instead of both R1 and R2 which is the default in the current version.
 
 ##########################
 ### USAGE
@@ -20,3 +24,4 @@ argument 6 specified.
 sh completeRun.sh read_directory read_id_style alignment_parent_directory 
 dataset_name junction_overlap mode report_directory_name ntrim denovoCircMode 
 junction_id_suffix 2>&1 | tee out.log
+
