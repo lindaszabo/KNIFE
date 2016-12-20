@@ -12,10 +12,16 @@ parameter 7, you still need to call the script with the default value for
 argument 6 specified.
 
 ** see README on main project page for details on each of these parameters
+
 In addition to the values for the parameter "mode" documented in the main project README,
 you can append "skipDenovo" to the mode string if you only want annotated junctions reported
 and "skipR2" if you only want junctions reported based on R1 junctional alignments (as in the
 initial KNIFE publication) instead of both R1 and R2 which is the default in the current version.
+
+If running on single end reads, append "skipGLM" to the mode parameter since the glm requires PE data.
+If you forget to append this value to the mode, you will see errors when the glm tries to run, but 
+the output under /reports directory is valid and you can just ignore the glm errors since this is 
+irrelevant for SE reads.
 
 ##########################
 ### USAGE
