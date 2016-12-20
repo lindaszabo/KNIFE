@@ -565,25 +565,28 @@ if __name__  == "__main__":
                 print "circ: ", str(numCirc), ", decoy: ", str(numDecoy), ", linear: ", str(numLinear), ", anomaly: ", str(numAnomaly), ", unmapped: ", str(numUnmapped), ", multimapped: ", str(numMultimapped), ", unknown: ", str(numUnknown)
                 print str(sum([numCirc, numDecoy, numLinear, numAnomaly, numUnmapped, numMultimapped, numUnknown]))
             
-            if args.aScore1 and args.aScore2:
-                globalCutOff = (args.aScore1, args.aScore2)
-                globalDecoyMMrate = None
-                if args.verbose:
-                    print "globalCutOff specified:", globalCutOff
-            else:
-                # use decoy distribution
-                globalCutOff = None
-                globalDecoyMMrate = getDecoyMismatchRate()
-                
-                # if there were no decoys, use the default seqErrorRate
-                if globalDecoyMMrate == None:
-                    globalDecoyMMrate = args.seqErrorRate
-                
-                if args.verbose:
-                    print "using decoy rate:", globalDecoyMMrate
+            # only want to do naive method for SE, we don't use it for PE
+            if args.singleEnd:
+                if args.aScore1 and args.aScore2:
+                    globalCutOff = (args.aScore1, args.aScore2)
+                    globalDecoyMMrate = None
+                    if args.verbose:
+                        print "globalCutOff specified:", globalCutOff
+                else:
+                    # use decoy distribution
+                    globalCutOff = None
+                    globalDecoyMMrate = getDecoyMismatchRate()
+                    
+                    # if there were no decoys, use the default seqErrorRate
+                    if globalDecoyMMrate == None:
+                        globalDecoyMMrate = args.seqErrorRate
+                    
+                    if args.verbose:
+                        print "using decoy rate:", globalDecoyMMrate
                     
             
-            reportCircularReads(globalCutOff)  # output reports
+                reportCircularReads(globalCutOff)  # output reports
+            
             reportAllReadIds2(globalCutOff)   # output ids used in the reports for further manual investigation if desired + GLM uses these category assignments
             
         except Exception as e:
