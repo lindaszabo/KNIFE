@@ -85,6 +85,11 @@ alignments (591803 + 1869618) in the sam file (2461421 alignment lines + 2 heade
 This is related with how Ubuntu executes /bin/sh; it uses dash instead by default. Although I have not tested on Ubuntu 14,
 a user reported that they were able to solved this problem by either specifying bash ./findCircularRNA_***.sh
 or disabling dash: sudo dpkg-reconfigure dash
+
+3. I can't download the indices from MEGA because of usage limits. Is there another way to get them?
+
+You can follow directions under createJunctionIndex to create new indices for a new genome, these were the steps used to 
+create the provided indices.
  
 
 
