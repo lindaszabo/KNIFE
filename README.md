@@ -63,11 +63,7 @@ So for example, if the sequence identifier lines in your 2 files are:
 - mode: the mode that the script will be run in. This affects which portions of the code are executed, output file types, etc. Portions of the mode string can be specified in any order. For example, mouse_phred64 is the same as phred64_mouse.
 
   ```
-  sam (default): output alignments as sam files
-  bam: output alignments as bam files. takes longer to run, but reduces disk space required to store 
-       alignments to about 1/6 of the sam files.
-  bam_sort: output alignments as sorted bam files. takes a lot longer to run, and reduces disk space 
-            to about 2/3 the size of the unsorted bam files.
+  sam (default): output alignments as sam files. bam output is currently not supported
   rat|mouse|fly: need to append this string to the mode for the respective organism, otherwise will default to human.
   analysis: alignment sam or bam files have already been generated, so just go straight to analysis step 
             instead of running Bowtie2
@@ -150,15 +146,15 @@ All output files can be found under [alignment_parent_directory]/[dataset_name] 
      - LINEAR_FRACTION: LINEAR_STRONG / TOTAL
      - CIRC / LINEAR: CIRC_FRACTION / LINEAR_FRACTION
 3. orig: contains all sam/bam files output and information used to assign reads to categories. In general there is no reason to dig into these files since the results, including the ids of reads that aligned to each junction, are output in report files under circReads as described above, but sometimes it is useful to dig back through if you want to trace what happened to a particular read.
-  1. genome: sam/bam files containing Bowtie2 alignments to the genome index
-  2. junction: sam/bam files containing Bowtie2 alignments to the scrambled junction index
-  3. reg: sam/bam files containing Bowtie2 alignments to the linear junction index
-  4. ribo: sam/bam files containing Bowtie2 alignments to the ribosomal index
+  1. genome: sam files containing Bowtie2 alignments to the genome index
+  2. junction: sam files containing Bowtie2 alignments to the scrambled junction index
+  3. reg: sam files containing Bowtie2 alignments to the linear junction index
+  4. ribo: sam files containing Bowtie2 alignments to the ribosomal index
   5. unaligned: fastq and fasta files for all reads that did not align to any index
     1. forDenovoIndex: fastq files containing subset of the unaligned reads that are long enough to be used for creating the denovo junction index
-  6. denovo: sam/bam files containing Bowtie2 alignments to the de novo junction index
+  6. denovo: sam files containing Bowtie2 alignments to the de novo junction index
   7. still_unaligned: fastq files containing the subset of the unaligned reads that did not align to the denovo index either 
-  8. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam/bam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
+  8. ids: text files containing the ids of reads that aligned to each index, location of alignment, and any other relevant data from the sam files used in subsequent analysis. The reads reported in the junction and reg subdirectories are only those that overlapped the junction by user-specified amount. In juncNonGR and denovoNonGR, the reported read ids are the subset of reads that overlapped a junction and did not align to the genome or ribosomal index.
 4. logs (Cluster version only, for Standalone stderr and stdout need to be redirected to log file)
   1. align: logs from all bowtie2 alignment calls
   2. analysis: logs from processing the Bowtie2 output to generate the naive-method and glm reports
